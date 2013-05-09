@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ASPNETDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ASPNETDBModelStoreContainer">
+          <EntitySet Name="aspnet_Users" EntityType="ASPNETDBModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Request" EntityType="ASPNETDBModel.Store.Request" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Result" EntityType="ASPNETDBModel.Store.Result" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Subject" EntityType="ASPNETDBModel.Store.Subject" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Request_aspnet_Users1" Association="ASPNETDBModel.Store.FK_Request_aspnet_Users1">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Subject" Association="ASPNETDBModel.Store.FK_Request_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_aspnet_Users" Association="ASPNETDBModel.Store.FK_Result_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Result" EntitySet="Result" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_Subject" Association="ASPNETDBModel.Store.FK_Result_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Result" EntitySet="Result" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="LoweredUserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="StudentID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="Result" Type="int" />
+          <Property Name="StudentID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectNumber" Type="int" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="200" />
+          <Property Name="MaxEnrolment" Type="int" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Request_aspnet_Users1">
+          <End Role="aspnet_Users" Type="ASPNETDBModel.Store.aspnet_Users" Multiplicity="0..1" />
+          <End Role="Request" Type="ASPNETDBModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Subject">
+          <End Role="Subject" Type="ASPNETDBModel.Store.Subject" Multiplicity="0..1" />
+          <End Role="Request" Type="ASPNETDBModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_aspnet_Users">
+          <End Role="aspnet_Users" Type="ASPNETDBModel.Store.aspnet_Users" Multiplicity="0..1" />
+          <End Role="Result" Type="ASPNETDBModel.Store.Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_Subject">
+          <End Role="Subject" Type="ASPNETDBModel.Store.Subject" Multiplicity="0..1" />
+          <End Role="Result" Type="ASPNETDBModel.Store.Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASPNETDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ASPNETDBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="aspnet_Users" EntityType="ASPNETDBModel.aspnet_Users" />
+          <EntitySet Name="Requests" EntityType="ASPNETDBModel.Request" />
+          <EntitySet Name="Results" EntityType="ASPNETDBModel.Result" />
+          <EntitySet Name="Subjects" EntityType="ASPNETDBModel.Subject" />
+          <AssociationSet Name="Subjectaspnet_Users" Association="ASPNETDBModel.Subjectaspnet_Users">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+          </AssociationSet>
+          <AssociationSet Name="SubjectSubject" Association="ASPNETDBModel.SubjectSubject">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="Subject1" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="SubjectResult" Association="ASPNETDBModel.SubjectResult">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="Result" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="aspnet_UsersRequest" Association="ASPNETDBModel.aspnet_UsersRequest">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="RequestSubject" Association="ASPNETDBModel.RequestSubject">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="MobileAlias" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Subjects" Relationship="ASPNETDBModel.Subjectaspnet_Users" FromRole="aspnet_Users" ToRole="Subject" />
+          <NavigationProperty Name="Requests" Relationship="ASPNETDBModel.aspnet_UsersRequest" FromRole="aspnet_Users" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Status" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="StudentID" Type="Guid" />
+          <Property Type="Guid" Name="aspnet_UsersUserId" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="ASPNETDBModel.RequestSubject" FromRole="Request" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="StudentID" Type="Guid" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectNumber" Type="Int32" />
+          <Property Name="SubjectName" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="MaxEnrolment" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Students" Relationship="ASPNETDBModel.Subjectaspnet_Users" FromRole="Subject" ToRole="aspnet_Users" />
+          <Property Type="String" Name="PrerequisiteOfId" Nullable="false" />
+          <NavigationProperty Name="Prerequisites" Relationship="ASPNETDBModel.SubjectSubject" FromRole="Subject" ToRole="Subject1" />
+          <NavigationProperty Name="Result" Relationship="ASPNETDBModel.SubjectResult" FromRole="Subject" ToRole="Result" />
+        </EntityType>
+        <Association Name="Subjectaspnet_Users">
+          <End Type="ASPNETDBModel.Subject" Role="Subject" Multiplicity="*" />
+          <End Type="ASPNETDBModel.aspnet_Users" Role="aspnet_Users" Multiplicity="*" />
+        </Association>
+        <Association Name="SubjectSubject">
+          <End Type="ASPNETDBModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="ASPNETDBModel.Subject" Role="Subject1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subject1">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SubjectResult">
+          <End Type="ASPNETDBModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="ASPNETDBModel.Result" Role="Result" Multiplicity="1" />
+        </Association>
+        <Association Name="aspnet_UsersRequest">
+          <End Type="ASPNETDBModel.aspnet_Users" Role="aspnet_Users" Multiplicity="1" />
+          <End Type="ASPNETDBModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="aspnet_UsersUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequestSubject">
+          <End Type="ASPNETDBModel.Request" Role="Request" Multiplicity="1" />
+          <End Type="ASPNETDBModel.Subject" Role="Subject" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASPNETDBModelStoreContainer" CdmEntityContainer="ASPNETDBEntities">
+          <EntitySetMapping Name="aspnet_Users">
+            <EntityTypeMapping TypeName="ASPNETDBModel.aspnet_Users">
+              <MappingFragment StoreEntitySet="aspnet_Users">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+                <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="ASPNETDBModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Results">
+            <EntityTypeMapping TypeName="ASPNETDBModel.Result">
+              <MappingFragment StoreEntitySet="Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="ASPNETDBModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubjectNumber" ColumnName="SubjectNumber" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="MaxEnrolment" ColumnName="MaxEnrolment" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
