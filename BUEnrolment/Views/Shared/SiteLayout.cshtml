@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SiteLayout</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/Style.css")" />
+</head>
+<body>
+    <div id="container">
+        <div id="header_bg">
+            <div id="header">
+                <h1>UTS</h1>
+                <h2>Student Enrollment</h2>
+            </div>
+        </div>
+
+        <div id="menu" class="clearfix">
+            <ul class="clearfix">
+                <li class="menuitem"><a href="#">Home</a></li>
+                <li class="menuitem"><a href="#">About</a></li>
+            </ul>
+        </div>
+
+        <div id="main" class="clearfix">
+            <div id="leftmenu">
+                <ul>
+                    <li><a href="ListSubjects.aspx">List Subject</a></li>
+                    <li><a href="EnrolSubject.aspx">Enrol</a></li>
+                    <li><a href="Requests.aspx">Create Request</a></li>
+                    <li><a href="RequestStatus.aspx">View Request</a></li>
+                    <li><a href="Results.aspx">View Results</a></li>
+                </ul>
+            </div>
+
+            <div id="content">
+                <div id="content_main">
+                    @RenderBody()
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</body>
+</html>

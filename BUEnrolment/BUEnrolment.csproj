@@ -129,6 +129,7 @@
     <Content Include="App_Data\BUEnrolment_log.ldf">
       <DependentUpon>BUEnrolment.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\Style.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -139,7 +140,6 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -157,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Student\Delete.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\SiteLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
