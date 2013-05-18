@@ -23,28 +23,22 @@
         </div>
         <div id="main" class="clearfix">
             <div id="leftmenu">
-        @if(Roles.IsUserInRole("Admin"))
-        {           
                 <ul>
-                    <li><a href="ListSubjects.aspx">List Subject</a></li>
+                @if(Roles.IsUserInRole("Admin"))
+                {           
+                    <li><a href="ListSubjects.aspx">Manage Subjects</a></li>
+                    <li><a href="EnrolSubject.aspx">View Requests</a></li>
+                }
+                else if(Roles.IsUserInRole("Student"))
+                {
+                    <li><a href="ListSubjects.aspx">Enroled Subject</a></li>
                     <li><a href="EnrolSubject.aspx">Enrol</a></li>
                     <li><a href="Requests.aspx">Create Request</a></li>
-                    <li><a href="RequestStatus.aspx">View Request</a></li>
+                    <li><a href="RequestStatus.aspx">View Requests</a></li>
                     <li><a href="Results.aspx">View Results</a></li>
-                 </ul>
-        
-        }
-        else if(Roles.IsUserInRole("Student"))
-        {
-                <ul>
-                    <li><a href="ListSubjects.aspx">List Subject</a></li>
-                    <li><a href="EnrolSubject.aspx">Enrol</a></li>
-                    <li><a href="Requests.aspx">Create Request</a></li>
-                    <li><a href="RequestStatus.aspx">View Request</a></li>
-                    <li><a href="Results.aspx">View Results</a></li>
-                 </ul>
-        }
-             </div>
+                }
+                </ul>
+            </div>
             <div id="content">
                 <div id="content_main">
                     @RenderBody()
