@@ -11,6 +11,7 @@ namespace BUEnrolment.Models
     {
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Result> Results { get; set; }
 
         public BUEnrolmentContext()
             : base("BUEnrolmentContext")
