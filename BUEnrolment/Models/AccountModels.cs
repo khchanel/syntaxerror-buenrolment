@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,6 +27,17 @@ namespace BUEnrolment.Models
 
     public class RegisterModel
     {
+        public IEnumerable<SelectListItem> items
+        {
+            get
+            {
+                foreach (var role in Roles.GetAllRoles())
+                {
+                    yield return new SelectListItem {Text = role.ToString(), Value = role.ToString()};
+                }
+            }
+        }
+
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
@@ -42,7 +54,7 @@ namespace BUEnrolment.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Role")]

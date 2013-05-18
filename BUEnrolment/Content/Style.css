@@ -55,6 +55,10 @@ p {
     color:#FFF;	
 }
 
+li 
+{
+    list-style:none;
+}
 
 #header h2
 {

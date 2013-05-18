@@ -23,8 +23,6 @@ namespace BUEnrolment.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            Roles.CreateRole("Student");
-            Roles.CreateRole("Admin");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -65,16 +63,9 @@ namespace BUEnrolment.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (var role in Roles.GetAllRoles())
-            {
-                SelectListItem s = new SelectListItem();
-                s.Text = role.ToString();
-                s.Value = role.ToString();
-                items.Add(s);
-            }
-            ViewBag.Roles = items;
-            return View();
+            RegisterModel Model = new RegisterModel();
+
+            return View(Model);
         }
 
         //

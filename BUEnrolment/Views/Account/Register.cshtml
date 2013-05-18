@@ -33,7 +33,7 @@
             </li>
             <li>
                 @Html.LabelFor(m => m.Role)
-                @Html.DropDownListFor(m => m.Role, new SelectList(ViewBag.Roles, "Text", "Value"))
+                @Html.DropDownListFor(m => m.Role, Model.items)
             </li>
         </ol>
         <input type="submit" value="Register" />

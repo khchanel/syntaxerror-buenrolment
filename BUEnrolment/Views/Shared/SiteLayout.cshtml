@@ -25,18 +25,30 @@
                 <li class="menuitem"><a href="#">About</a></li>
             </ul>
         </div>
-
         <div id="main" class="clearfix">
             <div id="leftmenu">
+        @if(Roles.IsUserInRole("Admin"))
+        {           
                 <ul>
                     <li><a href="ListSubjects.aspx">List Subject</a></li>
                     <li><a href="EnrolSubject.aspx">Enrol</a></li>
                     <li><a href="Requests.aspx">Create Request</a></li>
                     <li><a href="RequestStatus.aspx">View Request</a></li>
                     <li><a href="Results.aspx">View Results</a></li>
-                </ul>
-            </div>
-
+                 </ul>
+        
+        }
+        else if(Roles.IsUserInRole("Student"))
+        {
+                <ul>
+                    <li><a href="ListSubjects.aspx">List Subject</a></li>
+                    <li><a href="EnrolSubject.aspx">Enrol</a></li>
+                    <li><a href="Requests.aspx">Create Request</a></li>
+                    <li><a href="RequestStatus.aspx">View Request</a></li>
+                    <li><a href="Results.aspx">View Results</a></li>
+                 </ul>
+        }
+             </div>
             <div id="content">
                 <div id="content_main">
                     @RenderBody()
