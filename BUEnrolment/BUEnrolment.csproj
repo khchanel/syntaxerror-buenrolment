@@ -179,13 +179,10 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-<<<<<<< HEAD
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
-=======
->>>>>>> bc466830af45259234f664819cf5dcc772ee9eb3
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
