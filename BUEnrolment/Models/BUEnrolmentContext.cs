@@ -22,6 +22,8 @@ namespace BUEnrolment.Models
         {
             modelBuilder.Entity<Subject>().HasMany(m => m.Prerequisites).WithMany();
             modelBuilder.Entity<Student>().HasMany(m => m.Requests);
+            modelBuilder.Entity<Request>().HasRequired(m => m.Subject);
+            modelBuilder.Entity<Request>().HasRequired(m => m.Student);
             modelBuilder.Entity<Subject>()
                 .HasMany(s => s.EnrolledStudents)
                 .WithMany(p => p.EnrolledSubjects)

@@ -8,7 +8,8 @@ namespace BUEnrolment.Models
     public class Request
     {
         public int Id { get; set; }
-        public Subject subject { get; set; }
+        public Subject Subject { get; set; }
+        public Student Student { get; set; }
         public string Description { get; set; }
     }
 }
