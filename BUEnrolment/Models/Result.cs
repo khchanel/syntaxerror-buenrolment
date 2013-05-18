@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace EnrolmentTest.Models
+namespace BUEnrolment.Models
 {
     public class Result
     {
-        [Key]public Guid Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public int Mark { get; set; }
         public string Grade
         {

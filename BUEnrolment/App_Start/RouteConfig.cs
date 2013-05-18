@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace EnrolmentTest
+namespace BUEnrolment
 {
     public class RouteConfig
     {
@@ -16,7 +16,7 @@ namespace EnrolmentTest
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Student", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Subject", action = "Create", id = UrlParameter.Optional }
             );
         }
     }

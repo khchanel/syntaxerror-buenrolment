@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUEnrolment", "BUEnrolment\BUEnrolment.csproj", "{B7CB0E0C-B585-4835-8A0F-1455EFB104E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUEnrolmentTests", "BUEnrolmentTests\BUEnrolmentTests.csproj", "{0A724EF2-9F98-4C84-A7E9-BA2538CA7872}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B7CB0E0C-B585-4835-8A0F-1455EFB104E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7CB0E0C-B585-4835-8A0F-1455EFB104E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7CB0E0C-B585-4835-8A0F-1455EFB104E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A724EF2-9F98-4C84-A7E9-BA2538CA7872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A724EF2-9F98-4C84-A7E9-BA2538CA7872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A724EF2-9F98-4C84-A7E9-BA2538CA7872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A724EF2-9F98-4C84-A7E9-BA2538CA7872}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

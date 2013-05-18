@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EnrolmentTest.Models.Student>
+﻿@model IEnumerable<BUEnrolment.Models.Subject>
 
 @{
     ViewBag.Title = "Index";
@@ -12,13 +12,16 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StudentNumber)
+            @Html.DisplayNameFor(model => model.SubjectNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.MaxEnrolment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
         </th>
         <th></th>
     </tr>
@@ -26,13 +29,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.StudentNumber)
+            @Html.DisplayFor(modelItem => item.SubjectNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => item.MaxEnrolment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

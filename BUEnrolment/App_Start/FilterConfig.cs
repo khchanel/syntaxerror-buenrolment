@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace EnrolmentTest
+namespace BUEnrolment
 {
     public class FilterConfig
     {
