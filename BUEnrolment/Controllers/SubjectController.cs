@@ -39,6 +39,8 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Create()
         {
+            SelectList allSubjects = new SelectList(db.Subjects, "Id", "Name");
+            ViewBag.allSubjects = allSubjects;
             return View();
         }
 
@@ -47,8 +49,10 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Subject subject)
+        public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
+            List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+            subject.Prerequisites = Prerequisites;
             if (ModelState.IsValid)
             {
                 db.Subjects.Add(subject);
