@@ -17,7 +17,13 @@ namespace BUEnrolment.Models
         public int MaxEnrolment { get; set; }
         public bool Active { get; set; }
 
-        public List<Subject> Prerequisites { get; set; }
-        public List<Student> EnrolledStudents { get; set; }
+        public virtual List<Subject> Prerequisites { get; set; }
+        public virtual List<Student> EnrolledStudents { get; set; }
+
+        public Subject()
+        {
+            this.Prerequisites = new List<Subject>();
+            this.EnrolledStudents = new List<Student>();
+        }
     }
 }

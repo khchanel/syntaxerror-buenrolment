@@ -16,8 +16,14 @@ namespace BUEnrolment.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public List<Subject> EnrolledSubjects { get; set; }
-        public List<Request> Requests { get; set; }
-        public IDictionary<Subject, Result> CompletedSubjects { get; set; } 
+        public virtual List<Subject> EnrolledSubjects { get; set; }
+        public virtual List<Request> Requests { get; set; }
+        public IDictionary<Subject, Result> CompletedSubjects { get; set; }
+
+        public Student()
+        {
+            this.Requests = new List<Request>();
+            this.EnrolledSubjects = new List<Subject>();
+        }
     }
 }
