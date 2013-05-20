@@ -40,7 +40,9 @@ namespace BUEnrolment.Controllers
         public ActionResult Create()
         {
             SelectList allSubjects = new SelectList(db.Subjects, "Id", "Name");
+            SelectList selectedPrerequisites = new SelectList(new List<Subject>(), "Id", "Name");
             ViewBag.allSubjects = allSubjects;
+            ViewBag.SelectedPrerequisites = selectedPrerequisites;
             return View();
         }
 
@@ -55,7 +57,8 @@ namespace BUEnrolment.Controllers
             if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
             {
                 //Get a list of subject where the id is contained within the list of selectedPrerequisites
-                subject.Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+                foreach (Subject prerequisite in db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList())
+                subject.Prerequisites.Add(prerequisite);
             }
             subject.Active = true;
             if (ModelState.IsValid)
@@ -90,20 +93,28 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Subject subject, List<int> SelectedPrerequisites)
+        public ActionResult Edit(Subject subject, List<int> SelectedPrerequisites, int id = 0)
         {
+            Subject subjectToUpdate = db.Subjects.Find(id);
             if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
             {
                 //Get a list of subject where the id is contained within the list of selectedPrerequisites
-                //subject.Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
-                subject.Prerequisites.RemoveAll(m => SelectedPrerequisites.Contains(m.Id));
+                subjectToUpdate.Prerequisites.Clear();
+                foreach (Subject prerequisite in db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList())
+                {
+                    subjectToUpdate.Prerequisites.Add(prerequisite);
+                }
             }
             if (ModelState.IsValid)
             {
-                db.Entry(subject).State = EntityState.Modified;
+                db.Entry(subjectToUpdate).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            List<Subject> NonPrerequisites = db.Subjects.ToList().Except(subject.Prerequisites).ToList();
+            NonPrerequisites.Remove(subject);
+            ViewBag.SelectedPrerequisites = new SelectList(subject.Prerequisites, "Id", "Name");
+            ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
             return View(subject);
         }
 
