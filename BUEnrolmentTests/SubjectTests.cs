@@ -7,8 +7,9 @@ namespace BUEnrolmentTests
     public class SubjectTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void EnrolTest()
         {
+
         }
     }
 }

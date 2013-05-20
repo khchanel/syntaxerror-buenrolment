@@ -25,5 +25,10 @@ namespace BUEnrolment.Models
             this.Requests = new List<Request>();
             this.EnrolledSubjects = new List<Subject>();
         }
+
+        public void EnrolSubject(Subject subject)
+        {
+            EnrolledSubjects.Add(subject);
+        }
     }
 }

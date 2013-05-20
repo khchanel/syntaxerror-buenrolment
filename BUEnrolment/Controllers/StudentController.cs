@@ -34,6 +34,16 @@ namespace BUEnrolment.Controllers
             return View(student);
         }
 
+        public ActionResult Enrol(int id = 0)
+        {
+            Student student = db.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student);
+        }
+
         //
         // GET: /Student/Create
 
