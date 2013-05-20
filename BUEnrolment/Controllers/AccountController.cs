@@ -64,6 +64,8 @@ namespace BUEnrolment.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            this.CreateRoles();
+
             RegisterModel Model = new RegisterModel();
 
             return View(Model);
@@ -77,8 +79,6 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            this.CreateRoles();
-
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
@@ -164,6 +164,7 @@ namespace BUEnrolment.Controllers
         private void CreateRoles()
         {
             string [] roles = { "Admin", "Student" };
+
             foreach (string role in roles)
             {
                 if (!Roles.RoleExists(role))
