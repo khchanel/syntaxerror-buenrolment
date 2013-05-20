@@ -17,7 +17,6 @@ namespace BUEnrolment.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        const string[] ROLES = { "Admin", "Student" };
 
         //
         // GET: /Account/Login
@@ -164,7 +163,8 @@ namespace BUEnrolment.Controllers
         /// </summary>
         private void CreateRoles()
         {
-            foreach (string role in ROLES)
+            string [] roles = { "Admin", "Student" };
+            foreach (string role in roles)
             {
                 if (!Roles.RoleExists(role))
                 {
