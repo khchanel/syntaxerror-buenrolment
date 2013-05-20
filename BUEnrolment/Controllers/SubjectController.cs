@@ -40,9 +40,7 @@ namespace BUEnrolment.Controllers
         public ActionResult Create()
         {
             SelectList allSubjects = new SelectList(db.Subjects, "Id", "Name");
-            SelectList selectedPrerequisites = new SelectList(new List<Subject>(), "Id", "Name");
             ViewBag.allSubjects = allSubjects;
-            ViewBag.SelectedPrerequisites = selectedPrerequisites;
             return View();
         }
 
