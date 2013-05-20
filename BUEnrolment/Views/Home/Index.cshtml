@@ -1,5 +1,11 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+ @if (Roles.IsUserInRole("Admin"))
+ {
+     <h2>Welcome to Staff</h2>
+ }
+ else if (Roles.IsUserInRole("Student"))
+ {
+     <h2>Welcome to Student</h2>
+ }

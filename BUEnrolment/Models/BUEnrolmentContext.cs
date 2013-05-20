@@ -34,5 +34,7 @@ namespace BUEnrolment.Models
                     m.MapRightKey("SubjectId");
                 });
         }
+
+        public DbSet<Request> Requests { get; set; }
     }
 }
