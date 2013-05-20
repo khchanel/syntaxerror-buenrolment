@@ -45,10 +45,13 @@
         </div>
         <div class="editor-field">
             @Html.ListBox("NonPrerequisites", (MultiSelectList)ViewBag.NonPrerequisites)
-            @Html.ListBoxFor(model => model.Prerequisites, new MultiSelectList(Model.Prerequisites, "Id", "Name"))
+            <div id="controls">
+                <button type="button" onclick="moveItems(NonPrerequisites, SelectedPrerequisites);">></button>
+                <button type="button" onclick="moveItems(SelectedPrerequisites, NonPrerequisites);"><</button>
+            </div>
+            @Html.ListBox("SelectedPrerequisites", (MultiSelectList)ViewBag.SelectedPrerequisites)
         </div>
             @Html.HiddenFor(model => model.Active)
-            @Html.HiddenFor(model => model.Prerequisites)
         <p>
             <input type="submit" value="Save" />
         </p>

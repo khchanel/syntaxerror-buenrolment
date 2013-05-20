@@ -13,6 +13,22 @@
     padding: 0;
 }
 
+select {
+    display:inline-block;
+    width:140px;
+}
+
+#controls {
+    width:25px;
+    display:inline-block;
+    position:relative;
+    bottom:12px;
+}
+
+#controls > button {
+    width:25px;
+}
+
 ul {
     padding-left: 20px;
 }
