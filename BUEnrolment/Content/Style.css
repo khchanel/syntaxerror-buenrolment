@@ -22,11 +22,19 @@ select {
     width:25px;
     display:inline-block;
     position:relative;
-    bottom:12px;
+    bottom:7px;
 }
 
-#controls > button {
-    width:25px;
+#controls > a {
+    width:13px;
+    display:block;
+    margin-bottom:3px;
+    text-align:center;
+    background-color:#eee;
+    border:1px solid #ddd;
+    text-decoration:none;
+    padding:5px;
+    color:black;
 }
 
 ul {

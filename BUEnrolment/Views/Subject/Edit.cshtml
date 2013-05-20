@@ -46,8 +46,8 @@
         <div class="editor-field">
             @Html.ListBox("NonPrerequisites", (MultiSelectList)ViewBag.NonPrerequisites)
             <div id="controls">
-                <button type="button" onclick="moveItems(NonPrerequisites, SelectedPrerequisites);">></button>
-                <button type="button" onclick="moveItems(SelectedPrerequisites, NonPrerequisites);"><</button>
+                <a href="#" onclick="moveItems('NonPrerequisites', 'SelectedPrerequisites');">></a>
+                <a href="#" onclick="moveItems('SelectedPrerequisites', 'NonPrerequisites');"><</a>
             </div>
             @Html.ListBox("SelectedPrerequisites", (MultiSelectList)ViewBag.SelectedPrerequisites)
         </div>
