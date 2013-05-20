@@ -180,6 +180,7 @@
     <Content Include="App_Data\BUEnrolment_log.ldf">
       <DependentUpon>BUEnrolment.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\js\script.js" />
     <Content Include="Content\Style.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
