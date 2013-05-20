@@ -17,6 +17,8 @@ namespace BUEnrolment.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        const string[] ROLES = { "Admin", "Student" };
+
         //
         // GET: /Account/Login
 
@@ -76,6 +78,8 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
+            this.CreateRoles();
+
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
@@ -153,6 +157,22 @@ namespace BUEnrolment.Controllers
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
+
+        /// <summary>
+        /// create membership roles required
+        /// Available roles: Admin, Student
+        /// </summary>
+        private void CreateRoles()
+        {
+            foreach (string role in ROLES)
+            {
+                if (!Roles.RoleExists(role))
+                {
+                    Roles.CreateRole(role);
+                }
+            }
+        }
+
         #endregion
     }
 }
