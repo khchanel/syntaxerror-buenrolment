@@ -20,7 +20,15 @@ namespace BUEnrolment.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Subject>().HasMany(m => m.Prerequisites).WithMany();
+            modelBuilder.Entity<Subject>().
+                HasMany(m => m.Prerequisites).
+                WithMany()
+                .Map(m =>
+                    {
+                        m.ToTable("SubjectPrerequisite");
+                        m.MapLeftKey("SubjectId");
+                        m.MapRightKey("PrerequisiteId");
+                    });
             modelBuilder.Entity<Student>().HasMany(m => m.Requests);
             modelBuilder.Entity<Request>().HasRequired(m => m.Subject);
             modelBuilder.Entity<Subject>()
