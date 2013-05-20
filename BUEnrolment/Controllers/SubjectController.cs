@@ -18,7 +18,7 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Subjects);
+            return View(db.Subjects.Where(s => s.Active == true));
         }
 
         //
@@ -51,7 +51,13 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
-            subject.Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList(); 
+
+            if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
+            {
+                //Get a list of subject where the id is contained within the list of selectedPrerequisites
+                subject.Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+            }
+            subject.Active = true;
             if (ModelState.IsValid)
             {
                 db.Subjects.Add(subject);
@@ -68,14 +74,14 @@ namespace BUEnrolment.Controllers
         public ActionResult Edit(int id = 0)
         {
             Subject subject = db.Subjects.Find(id);
-            List<Subject> NonPrerequisites = db.Subjects.ToList().Except(subject.Prerequisites).ToList();
-            NonPrerequisites.Remove(subject);
-            ViewBag.SelectedPrerequisites = new SelectList(subject.Prerequisites, "Id", "Name");
-            ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
             if (subject == null)
             {
                 return HttpNotFound();
             }
+            List<Subject> NonPrerequisites = db.Subjects.ToList().Except(subject.Prerequisites).ToList();
+            NonPrerequisites.Remove(subject);
+            ViewBag.SelectedPrerequisites = new SelectList(subject.Prerequisites, "Id", "Name");
+            ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
             return View(subject);
         }
 
@@ -86,7 +92,12 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Subject subject, List<int> SelectedPrerequisites)
         {
-            List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+            if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
+            {
+                //Get a list of subject where the id is contained within the list of selectedPrerequisites
+                //subject.Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+                subject.Prerequisites.RemoveAll(m => SelectedPrerequisites.Contains(m.Id));
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(subject).State = EntityState.Modified;
