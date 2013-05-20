@@ -41,11 +41,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Active)
+            @Html.LabelFor(model => model.Prerequisites)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Active)
-            @Html.ValidationMessageFor(model => model.Active)
+            @Html.ListBox("NonPrerequisites", (MultiSelectList)ViewBag.NonPrerequisites)
+            @Html.ListBox("SelectedPrerequisites", (MultiSelectList)ViewBag.SelectedPrerequisites)
         </div>
 
         <p>

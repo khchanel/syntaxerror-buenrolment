@@ -18,7 +18,7 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Subjects.ToList());
+            return View(db.Subjects);
         }
 
         //
@@ -51,8 +51,7 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
-            List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
-            subject.Prerequisites = Prerequisites;
+            subject.Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList(); 
             if (ModelState.IsValid)
             {
                 db.Subjects.Add(subject);
@@ -69,6 +68,10 @@ namespace BUEnrolment.Controllers
         public ActionResult Edit(int id = 0)
         {
             Subject subject = db.Subjects.Find(id);
+            List<Subject> NonPrerequisites = db.Subjects.ToList().Except(subject.Prerequisites).ToList();
+            NonPrerequisites.Remove(subject);
+            ViewBag.SelectedPrerequisites = new SelectList(subject.Prerequisites, "Id", "Name");
+            ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
             if (subject == null)
             {
                 return HttpNotFound();
@@ -81,8 +84,9 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Subject subject)
+        public ActionResult Edit(Subject subject, List<int> SelectedPrerequisites)
         {
+            List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
             if (ModelState.IsValid)
             {
                 db.Entry(subject).State = EntityState.Modified;
@@ -110,10 +114,10 @@ namespace BUEnrolment.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Subject subject)
         {
-            Subject subject = db.Subjects.Find(id);
-            db.Subjects.Remove(subject);
+            subject.Active = false;
+            db.Entry(subject).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
