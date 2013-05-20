@@ -47,7 +47,7 @@
             @Html.ListBox("NonPrerequisites", (MultiSelectList)ViewBag.NonPrerequisites)
             @Html.ListBox("SelectedPrerequisites", (MultiSelectList)ViewBag.SelectedPrerequisites)
         </div>
-
+            @Html.HiddenFor(model => model.Active)
         <p>
             <input type="submit" value="Save" />
         </p>
