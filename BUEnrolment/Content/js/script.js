@@ -22,3 +22,9 @@
         }
     }
 }
+function selectAllItems(listId) {
+    var list = document.getElementById(listId);
+    for (var count = 0; count < list.options.length; count++) {
+        list.options[count].setAttribute("selected", "selected");
+    }
+}

@@ -43,16 +43,16 @@
             @Html.LabelFor(model => model.Prerequisites)
         </div>
         <div class="editor-field">
-            @Html.ListBox("NonPrerequisites", (MultiSelectList)ViewBag.allSubjects)
+            @Html.ListBox("allSubjects", (MultiSelectList)ViewBag.allSubjects)
             <div id="controls">
-                <a href="#" onclick="moveItems('allSubjects', 'SelectedPrerequisites');">></a>
-                <a href="#" onclick="moveItems('SelectedPrerequisites', 'allSubjects');"><</a>
+                <a onclick="moveItems('allSubjects', 'SelectedPrerequisites');">></a>
+                <a onclick="moveItems('SelectedPrerequisites', 'allSubjects');"><</a>
             </div>
-            @Html.ListBox("SelectedPrerequisites", new SelectList(new[] {""}))
+            @Html.ListBox("SelectedPrerequisites", new MultiSelectList(new List<String>()))
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" onclick="selectAllItems('SelectedPrerequisites');" value="Create" />
         </p>
     </fieldset>
 }
