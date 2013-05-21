@@ -13,8 +13,8 @@ namespace BUEnrolment.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Username { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
 
         public virtual List<Subject> EnrolledSubjects { get; set; }
         public virtual List<Request> Requests { get; set; }

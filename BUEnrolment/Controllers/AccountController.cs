@@ -84,7 +84,7 @@ namespace BUEnrolment.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { model.FullName });
                     WebSecurity.Login(model.UserName, model.Password);
                     Roles.AddUserToRole(model.UserName, model.Role);
                     return RedirectToAction("Index", "Home");
