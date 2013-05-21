@@ -12,12 +12,15 @@ namespace BUEnrolment.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Number")]
         public string SubjectNumber { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Max Enrolment")]
         public int MaxEnrolment { get; set; }
         public bool Active { get; set; }
 
         public virtual List<Subject> Prerequisites { get; set; }
+        [Display(Name = "Enrolled Students")]
         public virtual List<Student> EnrolledStudents { get; set; }
 
         public Subject()
