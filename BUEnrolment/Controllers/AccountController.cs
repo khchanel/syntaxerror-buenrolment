@@ -24,6 +24,9 @@ namespace BUEnrolment.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if(WebSecurity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -55,7 +58,7 @@ namespace BUEnrolment.Controllers
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //
@@ -64,6 +67,9 @@ namespace BUEnrolment.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (WebSecurity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             this.CreateRoles();
 
             RegisterModel Model = new RegisterModel();

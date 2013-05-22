@@ -38,6 +38,21 @@ select {
     cursor:pointer;
 }
 
+.link {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin:0;
+    padding:0;
+    cursor:pointer;
+}
+
+.link:hover {
+    color:#86AEF9;
+}
+
 ul {
     padding-left: 20px;
 }

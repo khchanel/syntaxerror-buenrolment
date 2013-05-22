@@ -38,6 +38,15 @@
                     <li><a href="RequestStatus.aspx">View Requests</a></li>
                     <li><a href="Results.aspx">View Results</a></li>
                 }
+                @if(WebSecurity.IsAuthenticated) {
+                    <li>
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Logout" class="link" />
+                        }
+                    </li>
+                }
                 </ul>
             </div>
             <div id="content">
