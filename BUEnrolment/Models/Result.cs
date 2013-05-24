@@ -25,6 +25,11 @@ namespace BUEnrolment.Models
 
         }
 
+        public Result()
+        {
+
+        }
+
         public Result(int mark)
         {
             Mark = mark;
