@@ -1,0 +1,29 @@
+﻿@model BUEnrolment.Models.Result
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Result</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Mark)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Mark)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Grade)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Grade)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
