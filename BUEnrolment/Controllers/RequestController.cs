@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using BUEnrolment.Models;
 using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace BUEnrolment.Controllers
 {
@@ -19,6 +20,8 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
+
+            List<Request> testthis = db.Requests.ToList();
             return View(db.Requests.ToList());
         }
 
@@ -47,6 +50,9 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Create()
         {
+            Student student = db.Students.FirstOrDefault();
+            //ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
+            ViewBag.RequestableSubjects = new SelectList(db.Subjects.ToList(), "Id", "Name");
             return View();
         }
 
@@ -55,12 +61,17 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Request request)
+        public ActionResult Create(Request request, int selectedSubject)
         {
             if (ModelState.IsValid)
             {
-                request.studentID = Membership.GetUser().UserName;
-                db.Requests.Add(request);
+                Subject subject = request.Subject;
+                subject = db.Subjects.FirstOrDefault(s => s.Id == selectedSubject);
+                Student currentStudent = db.Students.FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+                request.Subject = subject;
+
+                request.Status = "Pending";
+                currentStudent.Requests.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
