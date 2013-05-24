@@ -22,7 +22,7 @@ namespace BUEnrolment.Controllers
         {
 
             List<Request> testthis = db.Requests.ToList();
-            return View(db.Requests.ToList());
+            return View(db.Requests.Include(m => m.Subject).ToList());
         }
 
         [HttpPost]
@@ -56,7 +56,7 @@ namespace BUEnrolment.Controllers
             return View();
         }
 
-        //
+        // 
         // POST: /Request/Create
 
         [HttpPost]
@@ -65,12 +65,12 @@ namespace BUEnrolment.Controllers
         {
             if (ModelState.IsValid)
             {
-                Subject subject = request.Subject;
-                subject = db.Subjects.FirstOrDefault(s => s.Id == selectedSubject);
                 Student currentStudent = db.Students.FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
-                request.Subject = subject;
 
+                request.Subject = db.Subjects.FirstOrDefault(s => s.Id == selectedSubject);
                 request.Status = "Pending";
+                db.Entry(currentStudent).State = EntityState.Modified;
+                db.Entry(currentStudent).Collection(m => m.Requests).Load();
                 currentStudent.Requests.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("Index");
