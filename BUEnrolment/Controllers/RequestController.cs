@@ -19,7 +19,6 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
-            List<Request> temp = db.Requests.ToList();
             return View(db.Requests.ToList());
         }
 

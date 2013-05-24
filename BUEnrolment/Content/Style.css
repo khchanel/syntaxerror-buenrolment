@@ -232,6 +232,8 @@ td input[type="submit"] {
     clear: none;
 }
 
+
+
 input, textarea {
     clear: both;
     display: block;
