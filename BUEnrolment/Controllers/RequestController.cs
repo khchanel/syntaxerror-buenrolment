@@ -22,7 +22,7 @@ namespace BUEnrolment.Controllers
         {
 
             List<Request> testthis = db.Requests.ToList();
-            return View(db.Requests.Include(m => m.Subject).ToList());
+            return View(db.Requests.Include(m => m.Subject).Where(m => m.Status == "Pending").ToList());
         }
 
         [HttpPost]
@@ -54,6 +54,24 @@ namespace BUEnrolment.Controllers
             //ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
             ViewBag.RequestableSubjects = new SelectList(db.Subjects.ToList(), "Id", "Name");
             return View();
+        }
+
+        public ActionResult Approve(int Id)
+        {
+            Request request = db.Requests.FirstOrDefault(r => r.Id == Id);
+            request.Status = "Approve";
+            db.Entry(request).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Disapprove(int Id)
+        {
+            Request request = db.Requests.FirstOrDefault(r => r.Id == Id);
+            request.Status = "Disapprove";
+            db.Entry(request).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // 

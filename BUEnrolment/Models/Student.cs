@@ -30,5 +30,10 @@ namespace BUEnrolment.Models
         {
             EnrolledSubjects.Add(subject);
         }
+
+        public List<Subject> GetRequestableSubjects(List<Subject> allSubjects)
+        {
+            return allSubjects;
+        }
     }
 }
