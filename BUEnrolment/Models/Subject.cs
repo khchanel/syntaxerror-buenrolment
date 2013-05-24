@@ -15,6 +15,7 @@ namespace BUEnrolment.Models
         [Display(Name = "Number")]
         public string SubjectNumber { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         [Display(Name = "Max Enrolment")]
         public int MaxEnrolment { get; set; }
         public bool Active { get; set; }
