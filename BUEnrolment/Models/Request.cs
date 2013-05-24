@@ -13,9 +13,10 @@ namespace BUEnrolment.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Subject Number")]
-        public string SubjectNumber { get; set; }
+        public string Subject { get; set; }
         [Required]
         [Display(Name = "Reason For Enrolment")]
         public string Description { get; set; }
+        public string studentID { get; set; }
     }
 }

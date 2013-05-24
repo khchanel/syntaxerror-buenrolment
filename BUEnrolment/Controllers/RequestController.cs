@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BUEnrolment.Models;
+using System.Web.Security;
 
 namespace BUEnrolment.Controllers
 {
@@ -18,6 +19,7 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
+            List<Request> temp = db.Requests.ToList();
             return View(db.Requests.ToList());
         }
 
@@ -51,6 +53,7 @@ namespace BUEnrolment.Controllers
         {
             if (ModelState.IsValid)
             {
+                request.studentID = Membership.GetUser().UserName;
                 db.Requests.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("Index");
