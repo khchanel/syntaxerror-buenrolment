@@ -22,6 +22,13 @@ namespace BUEnrolment.Controllers
             return View(db.Requests.ToList());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(Request request)
+        {
+            return View(db.Requests.ToList());
+        }
+
         //
         // GET: /Request/Details/5
 

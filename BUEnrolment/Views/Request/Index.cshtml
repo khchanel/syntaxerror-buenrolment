@@ -27,6 +27,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
+        @if (Roles.IsUserInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Approve", "Index", new { id=item.Id }) 
+                @Html.ActionLink("Disapprove", "Index", new { id=item.Id })
+            </td>
+        }
     </tr>
 }
 
