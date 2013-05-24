@@ -34,8 +34,8 @@
                 {
                     <li>@Html.ActionLink("Manage Subjects","Index", "Subject", null, null)</li>
                     <li><a href="EnrolSubject.aspx">Enrol</a></li>
-                    <li><a href="Requests.aspx">Create Request</a></li>
-                    <li><a href="RequestStatus.aspx">View Requests</a></li>
+                    <li>@Html.ActionLink("Create Requests","Create", "Request", null, null)</li>
+                    <li>@Html.ActionLink("View Requests","Index", "Request", null, null)</li>
                     <li><a href="Results.aspx">View Results</a></li>
                 }
                 @if(WebSecurity.IsAuthenticated) {

@@ -14,6 +14,14 @@
         <legend>Request</legend>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.SubjectNumber)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SubjectNumber)
+            @Html.ValidationMessageFor(model => model.SubjectNumber)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
@@ -30,7 +38,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
