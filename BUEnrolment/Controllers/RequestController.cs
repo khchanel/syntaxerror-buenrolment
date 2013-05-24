@@ -21,8 +21,19 @@ namespace BUEnrolment.Controllers
         public ActionResult Index()
         {
 
-            List<Request> testthis = db.Requests.ToList();
-            return View(db.Requests.Include(m => m.Subject).Where(m => m.Status == "Pending").ToList());
+            List<Request> RequestList = new List<Request>();
+            Student student = db.Students.Include(m => m.Requests).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+
+            if (Roles.IsUserInRole("Admin"))
+            {
+                RequestList = db.Requests.Include(m => m.Subject).Where(m => m.Status == "Pending").ToList();
+            }
+            else if (Roles.IsUserInRole("Student"))
+            {
+                RequestList = student.GetStudentRequest(db.Requests.Include(m => m.Subject).ToList());
+            }
+
+            return View(RequestList);
         }
 
         [HttpPost]

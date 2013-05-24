@@ -35,5 +35,12 @@ namespace BUEnrolment.Models
         {
             return allSubjects;
         }
+
+        public List<Request> GetStudentRequest(List<Request> allRequests)
+        {
+            List<Request> filteredRequests = (from Request request in allRequests where (from studentRequest in Requests select studentRequest.Id).Contains(request.Id) select request).ToList();
+
+            return filteredRequests;
+        }
     }
 }
