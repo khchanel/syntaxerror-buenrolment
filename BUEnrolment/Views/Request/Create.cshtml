@@ -14,11 +14,10 @@
         <legend>Request</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.SubjectObject)
+            @Html.LabelFor(model => model.Subject)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.SubjectObject)
-            @Html.ValidationMessageFor(model => model.SubjectObject)
+            @Html.DropDownList("selectedSubject", (SelectList)ViewBag.RequestableSubjects)
         </div>
 
         <div class="editor-label">
