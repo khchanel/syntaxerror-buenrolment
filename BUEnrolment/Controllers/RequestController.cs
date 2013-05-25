@@ -21,21 +21,21 @@ namespace BUEnrolment.Controllers
         public ActionResult Index()
         {
 
-            List<Request> RequestList = new List<Request>();
-            Student student = db.Students.
-                Include(m => m.Requests).
-                Include(m => m.Requests.Select(r => r.Subject)).
-                FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+            List<Student> StudentList = new List<Student>();
             if (Roles.IsUserInRole("Admin"))
             {
-                RequestList = db.Requests.Include(m => m.Subject).Where(m => m.Status == "Pending").ToList();
+                StudentList = db.Students.Include(s => s.Requests.Where(r => r.Status == "Pending")).ToList();
             }
             else if (Roles.IsUserInRole("Student"))
             {
-                RequestList = student.Requests;
+                Student student = db.Students.
+                Include(m => m.Requests).
+                Include(m => m.Requests.Select(r => r.Subject)).
+                FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+                StudentList.Add(student);
             }
-
-            return View(RequestList);
+            ViewBag.Students = StudentList;
+            return View();
         }
 
         [HttpPost]
@@ -74,8 +74,12 @@ namespace BUEnrolment.Controllers
             Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
             request.Status = "Approve";
             db.Entry(request).State = EntityState.Modified;
+            Student student = db.Students.FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+            /*db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
+            student.EnrolSubject(request.Subject);*/
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Enrol", "Student", new { subject = request.Subject, student = student });
         }
 
         public ActionResult Disapprove(int Id)

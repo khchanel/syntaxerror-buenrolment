@@ -25,9 +25,12 @@ namespace BUEnrolment.Controllers
 
         //
         // GET: /Student/Enrol/5
-        public ActionResult Enrol(Subject subject)
+        public ActionResult Enrol(Subject subject, Student student)
         {
-            Student student = db.Students.FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
+            if (student == null)
+            {
+                student = db.Students.FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
+            }
             Subject subjectToAdd = db.Subjects.FirstOrDefault(m => m.Id == subject.Id);
             if (!student.FullyEnrolled())
             {

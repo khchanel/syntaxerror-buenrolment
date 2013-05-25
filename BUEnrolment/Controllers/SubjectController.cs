@@ -23,7 +23,7 @@ namespace BUEnrolment.Controllers
             List<Subject> allSubjects = db.Subjects.Where(s => s.Active == true).ToList();
             if (Roles.IsUserInRole("Student")) 
             {
-                Student student = db.Students.FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
+                Student student = db.Students.Include(m => m.EnrolledSubjects).FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
                
                 return View(student.GetEnrollableSubjects(allSubjects));
             }
