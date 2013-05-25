@@ -22,15 +22,17 @@ namespace BUEnrolment.Controllers
         {
 
             List<Request> RequestList = new List<Request>();
-            Student student = db.Students.Include(m => m.Requests).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
-
+            Student student = db.Students.
+                Include(m => m.Requests).
+                Include(m => m.Requests.Select(r => r.Subject)).
+                FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
             if (Roles.IsUserInRole("Admin"))
             {
                 RequestList = db.Requests.Include(m => m.Subject).Where(m => m.Status == "Pending").ToList();
             }
             else if (Roles.IsUserInRole("Student"))
             {
-                RequestList = student.GetStudentRequest(db.Requests.Include(m => m.Subject).ToList());
+                RequestList = student.Requests;
             }
 
             return View(RequestList);
@@ -69,7 +71,7 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Approve(int Id)
         {
-            Request request = db.Requests.FirstOrDefault(r => r.Id == Id);
+            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
             request.Status = "Approve";
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
@@ -78,7 +80,7 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Disapprove(int Id)
         {
-            Request request = db.Requests.FirstOrDefault(r => r.Id == Id);
+            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
             request.Status = "Disapprove";
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
