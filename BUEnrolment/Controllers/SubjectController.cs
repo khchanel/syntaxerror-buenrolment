@@ -5,7 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using BUEnrolment.Models;
+using WebMatrix.WebData;
 
 namespace BUEnrolment.Controllers
 {
@@ -18,7 +20,15 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Subjects.Where(s => s.Active == true));
+            List<Subject> allSubjects = db.Subjects.Where(s => s.Active == true).ToList();
+            if (Roles.IsUserInRole("Student")) 
+            {
+                Student student = db.Students.FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
+               
+                return View(student.GetEnrollableSubjects(allSubjects));
+            }
+            return View(allSubjects);
+            
         }
 
         //
