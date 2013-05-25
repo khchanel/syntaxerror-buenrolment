@@ -64,7 +64,7 @@ namespace BUEnrolment.Models
 
         public void RemoveMaxEnrolmentReached(ref List<Subject> enrollableSubjects)
         {
-            foreach (Subject subject in enrollableSubjects.Where(subject => subject.MaxEnrolmentIsReached()))
+            foreach (Subject subject in enrollableSubjects.Where(subject => subject.MaxEnrolmentIsReached()).ToList())
             {
                 enrollableSubjects.Remove(subject);
             }
@@ -72,7 +72,7 @@ namespace BUEnrolment.Models
 
         public void RemoveFailedThreeTimes(ref List<Subject> enrollableSubjects)
         {
-            foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubjects.Count(s => s.Item1 == subject && s.Item2.Mark < 50) == 3))
+            foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubjects.Count(s => s.Item1 == subject && s.Item2.Mark < 50) == 3).ToList())
             {
                 enrollableSubjects.Remove(subject);
             }
@@ -80,7 +80,7 @@ namespace BUEnrolment.Models
 
         public void RemovePrerequisitesNotCompleted(ref List<Subject> enrollableSubjects)
         {
-            foreach (Subject subject in enrollableSubjects.Where(subject => !subject.Prerequisites.Except(CompletedSubjects.Where(m => m.Item2.Mark >= 50).Select(s => s.Item1)).Any()))
+            foreach (Subject subject in enrollableSubjects.Where(subject => !subject.Prerequisites.Except(CompletedSubjects.Where(m => m.Item2.Mark >= 50).Select(s => s.Item1)).Any()).ToList())
             {
                 enrollableSubjects.Remove(subject);
             }
