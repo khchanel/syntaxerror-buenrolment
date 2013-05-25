@@ -29,5 +29,10 @@ namespace BUEnrolment.Models
             this.Prerequisites = new List<Subject>();
             this.EnrolledStudents = new List<Student>();
         }
+
+        public bool MaxEnrolmentIsReached()
+        {
+            return EnrolledStudents.Count >= MaxEnrolment;
+        }
     }
 }
