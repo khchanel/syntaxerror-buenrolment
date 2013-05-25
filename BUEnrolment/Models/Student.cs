@@ -44,7 +44,7 @@ namespace BUEnrolment.Models
             RemovePassed(ref allSubjects);
             RemoveMaxEnrolmentReached(ref allSubjects);
             RemoveFailedThreeTimes(ref allSubjects);
-            RemovePrerequisitesNotCompleted(ref allSubjects);
+            //RemovePrerequisitesNotCompleted(ref allSubjects);
 
             return allSubjects;
         }

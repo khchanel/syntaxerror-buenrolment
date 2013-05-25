@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BUEnrolment.Models.Request>
+﻿@model IEnumerable<BUEnrolment.Models.Student>
 
 @{
     ViewBag.Title = "Index";
@@ -15,30 +15,32 @@
 <table>
     <tr>
         <th style="padding-right:72px">
-            @Html.DisplayNameFor(model => model.Subject.SubjectNumber)
+            @Html.DisplayName("Subject Number")
         </th>
         <th>
-             @Html.DisplayNameFor(model => model.Description)
+             @Html.DisplayName("Description")
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject.SubjectNumber)
-            @Html.DisplayFor(modelItem => item.Subject.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        @if (Roles.IsUserInRole("Admin"))
-        {
-            <td>
-                @Html.ActionLink("Approve", "Approve", new { id=item.Id }) 
-                @Html.ActionLink("Disapprove", "Disapprove", new { id=item.Id })
-            </td>
-        }
-    </tr>
+@foreach (var student in ViewBag.Students) {
+     foreach (var request in student.Requests) {
+         <tr>
+             <td>
+                 @Html.DisplayName((string)request.Subject.SubjectNumber)
+                 @Html.DisplayName((string)request.Subject.Name)
+             </td>
+             <td>
+                @Html.DisplayName((string)request.Description)
+             </td>
+             @if (Roles.IsUserInRole("Admin"))
+             {
+                 <td>
+                     @Html.ActionLink("Approve", "Approve", new { requestId=request.Id, studentId = student.Id }) 
+                     @Html.ActionLink("Disapprove", "Disapprove", new { requestId=request.Id, studentId = student.Id })
+                 </td>
+             }
+         </tr>
+     }
 }
 
 </table>

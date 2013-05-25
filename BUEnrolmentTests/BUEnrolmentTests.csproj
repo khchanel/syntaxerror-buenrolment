@@ -56,6 +56,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestTests.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BUEnrolment\BUEnrolment.csproj">
+      <Project>{b7cb0e0c-b585-4835-8a0f-1455efb104e3}</Project>
+      <Name>BUEnrolment</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

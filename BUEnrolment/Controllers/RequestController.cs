@@ -24,7 +24,8 @@ namespace BUEnrolment.Controllers
             List<Student> StudentList = new List<Student>();
             if (Roles.IsUserInRole("Admin"))
             {
-                StudentList = db.Students.Include(s => s.Requests.Where(r => r.Status == "Pending")).ToList();
+                StudentList = db.Students.Where(s => s.Requests.Any(r => r.Status == "Pending")).Include(s => s.Requests.Select(r => r.Subject)).ToList();
+                    //db.Students.Where(s => s.Requests.Where(r => r.Status == "Pending"));
             }
             else if (Roles.IsUserInRole("Student"))
             {
@@ -69,17 +70,17 @@ namespace BUEnrolment.Controllers
             return View();
         }
 
-        public ActionResult Approve(int Id)
+        public ActionResult Approve(int requestId, int studentId)
         {
-            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
+            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);
             request.Status = "Approve";
             db.Entry(request).State = EntityState.Modified;
-            Student student = db.Students.FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
             /*db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
             student.EnrolSubject(request.Subject);*/
 
             db.SaveChanges();
-            return RedirectToAction("Enrol", "Student", new { subject = request.Subject, student = student });
+            //subject = request.Subject, student = requestingStudent
+            return RedirectToAction("Enrol", "Student", new { studentId = studentId, subjectId = request.Subject.Id });
         }
 
         public ActionResult Disapprove(int Id)

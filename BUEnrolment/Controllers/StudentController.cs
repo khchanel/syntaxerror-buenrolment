@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using BUEnrolment.Models;
 using WebMatrix.WebData;
+using System.Web.Security;
 
 namespace BUEnrolment.Controllers
 {
@@ -25,19 +26,24 @@ namespace BUEnrolment.Controllers
 
         //
         // GET: /Student/Enrol/5
-        public ActionResult Enrol(Subject subject, Student student)
+        public ActionResult Enrol(int studentId, int subjectId)
         {
-            if (student == null)
-            {
-                student = db.Students.FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
-            }
-            Subject subjectToAdd = db.Subjects.FirstOrDefault(m => m.Id == subject.Id);
+            Student student = db.Students.FirstOrDefault(s => s.Id == studentId);
+            Subject subject = db.Subjects.FirstOrDefault(s => s.Id == subjectId);
+          
             if (!student.FullyEnrolled())
             {
                 db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
-                student.EnrolSubject(subjectToAdd);
+                student.EnrolSubject(subject);
                 db.SaveChanges();
+            
             }
+
+            if (Roles.IsUserInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Request");
+            }
+
             return RedirectToAction("Index", "Subject");
         }
 
