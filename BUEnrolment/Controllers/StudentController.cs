@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BUEnrolment.Models;
+using WebMatrix.WebData;
 
 namespace BUEnrolment.Controllers
 {
@@ -21,20 +22,26 @@ namespace BUEnrolment.Controllers
             return View(db.Students.ToList());
         }
 
+
+        //
+        // GET: /Student/Enrol/5
+        public ActionResult Enrol(Subject subject)
+        {
+            Student student = db.Students.FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
+            Subject subjectToAdd = db.Subjects.FirstOrDefault(m => m.Id == subject.Id);
+            if (!student.FullyEnrolled())
+            {
+                db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
+                student.EnrolSubject(subjectToAdd);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Subject");
+        }
+
         //
         // GET: /Student/Details/5
 
         public ActionResult Details(int id = 0)
-        {
-            Student student = db.Students.Find(id);
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
-            return View(student);
-        }
-
-        public ActionResult Enrol(int id = 0)
         {
             Student student = db.Students.Find(id);
             if (student == null)
