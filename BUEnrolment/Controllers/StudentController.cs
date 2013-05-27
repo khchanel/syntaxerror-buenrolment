@@ -23,7 +23,6 @@ namespace BUEnrolment.Controllers
             return View(db.Students.ToList());
         }
 
-
         //
         // GET: /Student/Enrol/5
         public ActionResult Enrol(int studentId, int subjectId)
@@ -36,7 +35,6 @@ namespace BUEnrolment.Controllers
                 db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
                 student.EnrolSubject(subject);
                 db.SaveChanges();
-            
             }
 
             if (Roles.IsUserInRole("Admin"))
