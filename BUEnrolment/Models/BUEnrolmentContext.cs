@@ -12,6 +12,7 @@ namespace BUEnrolment.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Result> Results { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         public BUEnrolmentContext()
             : base("BUEnrolmentContext")
@@ -30,6 +31,7 @@ namespace BUEnrolment.Models
                         m.MapRightKey("PrerequisiteId");
                     });
             modelBuilder.Entity<Student>().HasMany(m => m.Requests);
+            modelBuilder.Entity<Student>().HasMany(m => m.CompletedSubject);
             modelBuilder.Entity<Request>().HasRequired(m => m.Subject);
             modelBuilder.Entity<Subject>()
                 .HasMany(s => s.EnrolledStudents)
@@ -41,7 +43,5 @@ namespace BUEnrolment.Models
                     m.MapRightKey("SubjectId");
                 });
         }
-
-        public DbSet<Request> Requests { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace BUEnrolment.Models
         [Key]
         public int Id { get; set; }
         public int Mark { get; set; }
+        public Subject subject { get; set; }
         public string Grade
         {
             get
@@ -19,8 +20,10 @@ namespace BUEnrolment.Models
             }
             set
             {
+                ;
+                //Grade = "Fail";
                 //convert Mark to Grade
-                throw new NotImplementedException();
+               // throw new NotImplementedException();
             }
 
         }

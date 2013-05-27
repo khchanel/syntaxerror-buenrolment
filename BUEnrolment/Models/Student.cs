@@ -18,13 +18,15 @@ namespace BUEnrolment.Models
 
         public virtual List<Subject> EnrolledSubjects { get; set; }
         public virtual List<Request> Requests { get; set; }
-        public virtual List<Tuple<Subject, Result>> CompletedSubjects { get; set; }
+        //public virtual List<Tuple<Subject, Result>> CompletedSubjects { get; set; }
+        public virtual List<Result> CompletedSubject { get; set; }
 
         public Student()
         {
             Requests = new List<Request>();
             EnrolledSubjects = new List<Subject>();
-            CompletedSubjects = new List<Tuple<Subject, Result>>();
+            CompletedSubject = new List<Result>();
+           // CompletedSubjects = new List<Tuple<Subject, Result>>();
 
         }
 
@@ -33,9 +35,9 @@ namespace BUEnrolment.Models
             EnrolledSubjects.Add(subject);
         }
 
-        public void CompleteSubject(Subject subject, Result result)
+        public void CompleteSubject(Result result)
         {
-            CompletedSubjects.Add(Tuple.Create(subject, result));
+            CompletedSubject.Add(result);
         }
 
         public List<Subject> GetEnrollableSubjects(List<Subject> allSubjects)
@@ -56,9 +58,9 @@ namespace BUEnrolment.Models
 
         public void RemovePassed(ref List<Subject> enrollableSubjects)
         {
-            foreach (Tuple<Subject, Result> completedSubject in CompletedSubjects.Where(completedSubject => completedSubject.Item2.Mark > 49))
+            foreach (Result completedSubject in CompletedSubject.Where(completedSubject => completedSubject.Mark > 49))
             {
-                enrollableSubjects.Remove(completedSubject.Item1);
+                enrollableSubjects.Remove(completedSubject.subject);
             }   
         }
 
@@ -72,7 +74,7 @@ namespace BUEnrolment.Models
 
         public void RemoveFailedThreeTimes(ref List<Subject> enrollableSubjects)
         {
-            foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubjects.Count(s => s.Item1 == subject && s.Item2.Mark < 50) == 3).ToList())
+            foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubject.Count(s => s.subject == subject && s.Mark < 50) == 3).ToList())
             {
                 enrollableSubjects.Remove(subject);
             }
@@ -80,7 +82,7 @@ namespace BUEnrolment.Models
 
         public void RemovePrerequisitesNotCompleted(ref List<Subject> enrollableSubjects)
         {
-            foreach (Subject subject in enrollableSubjects.Where(subject => !subject.Prerequisites.Except(CompletedSubjects.Where(m => m.Item2.Mark >= 50).Select(s => s.Item1)).Any()).ToList())
+            foreach (Subject subject in enrollableSubjects.Where(subject => !subject.Prerequisites.Except(CompletedSubject.Where(m => m.Mark >= 50).Select(s => s.subject)).Any()).ToList())
             {
                 enrollableSubjects.Remove(subject);
             }

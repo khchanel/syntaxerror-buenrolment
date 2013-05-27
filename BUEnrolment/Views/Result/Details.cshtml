@@ -1,29 +1,30 @@
-﻿@model BUEnrolment.Models.Result
+﻿@model IList<BUEnrolment.Models.Result>
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Results</h2>
 
-<fieldset>
-    <legend>Result</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Mark)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Mark)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Grade)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Grade)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayName("Subject Name")
+        </th>
+        <th>
+            @Html.DisplayName("Mark")
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var result in Model)
+    {
+        <tr>
+        <td>
+            @Html.DisplayFor(model => result.subject.Name)
+        </td>
+        <td>
+             @Html.DisplayFor(model => result.Mark)
+        </td>
+    </tr>
+    }
+</table>
