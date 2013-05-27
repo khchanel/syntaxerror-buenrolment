@@ -47,6 +47,17 @@ namespace BUEnrolment.Controllers
         //
         // GET: /Subject/Create
 
+        public ActionResult Enrolled()
+        {
+            Student student = db.Students.Include(m => m.EnrolledSubjects).FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
+
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student.EnrolledSubjects);
+        }
+
         public ActionResult Create()
         {
             SelectList allSubjects = new SelectList(db.Subjects, "Id", "Name");
