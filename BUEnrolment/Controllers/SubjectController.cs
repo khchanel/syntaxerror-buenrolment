@@ -95,7 +95,6 @@ namespace BUEnrolment.Controllers
             ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
             return View(subject);
         }
-
         //
         // POST: /Subject/Edit/5
 

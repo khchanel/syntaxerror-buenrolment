@@ -36,7 +36,6 @@ namespace BUEnrolment.Controllers
                 db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
                 student.EnrolSubject(subject);
                 db.SaveChanges();
-            
             }
 
             if (Roles.IsUserInRole("Admin"))
