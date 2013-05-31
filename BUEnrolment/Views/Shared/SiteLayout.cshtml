@@ -3,11 +3,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>BU Enrolment System</title>
+    <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="@Url.Content("~/Content/Style.css")" />
     <script src="@Url.Content("~/Content/js/script.js")" type="text/javascript"></script>
 </head>
-<body>
+<body class="@((WebSecurity.IsAuthenticated) ? "authenticated" : "not-authenticated")">
     <div id="container">
         <div id="header_bg">
             <div id="header">
@@ -22,33 +22,34 @@
                 <li class="menuitem"><a href="#">About</a></li>
             </ul>
         </div>
-        <div id="main" class="clearfix">
-            <div id="leftmenu">
-                <ul>
-                @if(Roles.IsUserInRole("Admin"))
-                {           
-                    <li>@Html.ActionLink("Manage Subjects","Index", "Subject", null, null)</li>
-                    <li>@Html.ActionLink("View Requests","Index", "Request", null, null)</li>
-                }
-                else if(Roles.IsUserInRole("Student"))
-                {
-                    <li>@Html.ActionLink("Enrolled Subjects","Enrolled", "Subject", null, null)</li>
-                    <li>@Html.ActionLink("Enrol","Index", "Subject", null, null)</li>
-                    <li>@Html.ActionLink("Create Requests","Create", "Request", null, null)</li>
-                    <li>@Html.ActionLink("View Requests","Index", "Request", null, null)</li>
-                    <li>@Html.ActionLink("View Results","Details", "Result", null, null)</li>
-                }
-                @if(WebSecurity.IsAuthenticated) {
-                    <li>
-                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="submit" value="Logout" class="link" />
-                        }
-                    </li>
-                }
-                </ul>
-            </div>
+            <div id="main" class="clearfix">
+                <div id="leftmenu">
+                    <ul>
+                    @if(Roles.IsUserInRole("Admin"))
+                    {           
+                        <li>@Html.ActionLink("Manage Subjects","Index", "Subject", null, null)</li>
+                        <li>@Html.ActionLink("View Requests","Index", "Request", null, null)</li>
+                    }
+                    else if(Roles.IsUserInRole("Student"))
+                    {
+                        <li>@Html.ActionLink("Enrolled Subjects","Enrolled", "Subject", null, null)</li>
+                        <li>@Html.ActionLink("Enrol","Index", "Subject", null, null)</li>
+                        <li>@Html.ActionLink("Create Requests","Create", "Request", null, null)</li>
+                        <li>@Html.ActionLink("View Requests","Index", "Request", null, null)</li>
+                        <li>@Html.ActionLink("View Results","Details", "Result", null, null)</li>
+                    }
+                    @if(WebSecurity.IsAuthenticated) {
+                        <li>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="Logout" class="link" />
+                            }
+                        </li>
+                    }
+                    </ul>
+                </div>
+
             <div id="content">
                 <div id="content_main">
                     @RenderBody()

@@ -25,6 +25,19 @@ select {
     bottom:7px;
 }
 
+body.not-authenticated #content {
+    margin:0 auto;
+    float:none;
+}
+
+body.not-authenticated #content fieldset {
+    margin:0 auto;
+}
+
+body.not-authenticated #leftmenu {
+    display: none;
+}
+
 #controls > a {
     width:13px;
     display:block;
@@ -36,6 +49,10 @@ select {
     padding:5px;
     color:black;
     cursor:pointer;
+}
+
+fieldset {
+    border:none;
 }
 
 .link {

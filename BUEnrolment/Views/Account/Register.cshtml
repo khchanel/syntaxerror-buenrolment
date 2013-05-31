@@ -4,8 +4,7 @@
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
 @using (Html.BeginForm()) {
@@ -13,7 +12,6 @@
     @Html.ValidationSummary()
 
     <fieldset>
-        <legend>Registration Form</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.UserName)
