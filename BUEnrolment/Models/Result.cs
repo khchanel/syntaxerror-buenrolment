@@ -25,54 +25,42 @@ namespace BUEnrolment.Models
         [Key]
         public int Id { get; set; }
         public Subject subject { get; set; }
-        public double Mark {
+        public double Mark { get; set; }
+        public ResultGrade Grade {
             get
             {
-                return mark;
-            }
-            set
-            {
-                mark = value;
-                Grade = MarkToGrade(mark);
+                NameValueCollection appSettings = ConfigurationManager.AppSettings;
+                ResultGrade grade;
+
+                if (mark >= Convert.ToInt32(appSettings["HighDistinction"]))
+                {
+                    grade = ResultGrade.HighDistinction;
+                }
+                else if (mark >= Convert.ToInt32(appSettings["Distinction"]))
+                {
+                    grade = ResultGrade.Distinction;
+                }
+                else if (mark >= Convert.ToInt32(appSettings["Credit"]))
+                {
+                    grade = ResultGrade.Credit;
+                }
+                else if (mark >= Convert.ToInt32(appSettings["Pass"]))
+                {
+                    grade = ResultGrade.Pass;
+                }
+                else
+                {
+                    grade = ResultGrade.Fail;
+                }
+
+                return grade;
             }
         }
-        public ResultGrade Grade { get; private set; }
 
 
         public Result()
         {
-            Grade = ResultGrade.Fail;
-        }
 
-
-
-        private ResultGrade MarkToGrade(double mark)
-        {
-            NameValueCollection appSettings = ConfigurationManager.AppSettings;
-            ResultGrade grade;
-
-            if (mark >= Convert.ToInt32(appSettings["HighDistinction"]))
-            {
-                grade = ResultGrade.HighDistinction;
-            }
-            else if (mark >= Convert.ToInt32(appSettings["Distinction"]))
-            {
-                grade = ResultGrade.Distinction;
-            }
-            else if (mark >= Convert.ToInt32(appSettings["Credit"]))
-            {
-                grade = ResultGrade.Credit;
-            }
-            else if (mark >= Convert.ToInt32(appSettings["Pass"]))
-            {
-                grade = ResultGrade.Pass;
-            }
-            else
-            {
-                grade = ResultGrade.Fail;
-            }
-
-            return grade;
         }
     }
 }
