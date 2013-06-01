@@ -72,7 +72,7 @@ namespace BUEnrolment.Models
         {
             foreach (Result completedSubject in CompletedSubject.Where(completedSubject => completedSubject.Mark > 49))
             {
-                enrollableSubjects.Remove(completedSubject.subject);
+                enrollableSubjects.Remove(completedSubject.Subject);
             }
         }
 
@@ -86,7 +86,7 @@ namespace BUEnrolment.Models
 
         private void RemoveFailedThreeTimes(ref List<Subject> enrollableSubjects)
         {
-            foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubject.Count(s => s.subject == subject && s.Mark < 50) == 3).ToList())
+            foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubject.Count(s => s.Subject == subject && s.Mark < 50) == 3).ToList())
             {
                 enrollableSubjects.Remove(subject);
             }
@@ -97,7 +97,7 @@ namespace BUEnrolment.Models
 
             foreach (Subject subject in enrollableSubjects
                 .Where(subject => (subject.Prerequisites
-                    .Except(CompletedSubject.Where(m => m.Mark >= 50).Select(s => s.subject)).Any()) == remove)
+                    .Except(CompletedSubject.Where(m => m.Mark >= 50).Select(s => s.Subject)).Any()) == remove)
                     .ToList())
             {
                 enrollableSubjects.Remove(subject);

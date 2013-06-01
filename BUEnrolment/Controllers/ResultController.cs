@@ -35,7 +35,7 @@ namespace BUEnrolment.Controllers
                 for (int i = 0; i < subject.EnrolledStudents.Count; i++)
                 {
                     Student enrolledStudent = subject.EnrolledStudents[i];
-                    results[i].subject = subject;
+                    results[i].Subject = subject;
                     enrolledStudent.CompleteSubject(results[i]);
                 }
                 db.SaveChanges();
@@ -59,7 +59,7 @@ namespace BUEnrolment.Controllers
             }
             return View(result);*/
 
-            Student student = db.Students.Include(s => s.CompletedSubject).Include(s => s.CompletedSubject.Select(c => c.subject)).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+            Student student = db.Students.Include(s => s.CompletedSubject).Include(s => s.CompletedSubject.Select(c => c.Subject)).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
             return View(student.CompletedSubject);
 
         }
