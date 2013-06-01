@@ -20,7 +20,6 @@ namespace BUEnrolment.Models
             Fail = 0
         }
 
-        private double mark;
 
         [Key]
         public int Id { get; set; }
@@ -32,19 +31,19 @@ namespace BUEnrolment.Models
                 NameValueCollection appSettings = ConfigurationManager.AppSettings;
                 ResultGrade grade;
 
-                if (mark >= Convert.ToInt32(appSettings["HighDistinction"]))
+                if (Mark >= Convert.ToInt32(appSettings["HighDistinction"]))
                 {
                     grade = ResultGrade.HighDistinction;
                 }
-                else if (mark >= Convert.ToInt32(appSettings["Distinction"]))
+                else if (Mark >= Convert.ToInt32(appSettings["Distinction"]))
                 {
                     grade = ResultGrade.Distinction;
                 }
-                else if (mark >= Convert.ToInt32(appSettings["Credit"]))
+                else if (Mark >= Convert.ToInt32(appSettings["Credit"]))
                 {
                     grade = ResultGrade.Credit;
                 }
-                else if (mark >= Convert.ToInt32(appSettings["Pass"]))
+                else if (Mark >= Convert.ToInt32(appSettings["Pass"]))
                 {
                     grade = ResultGrade.Pass;
                 }
