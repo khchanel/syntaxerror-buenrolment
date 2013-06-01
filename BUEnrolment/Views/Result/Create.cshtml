@@ -29,6 +29,7 @@
         </td>
         <td>
             @Html.EditorFor(model => model[i].Mark)
+            @Html.ValidationMessageFor(model => model[i].Mark)
         </td>
     </tr>
 }
