@@ -167,7 +167,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Enrolment.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Student.cs" />
