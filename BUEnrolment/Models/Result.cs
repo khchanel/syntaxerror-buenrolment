@@ -25,7 +25,7 @@ namespace BUEnrolment.Models
         public Subject Subject { get; set; }
 
         [Required]
-        [Range(0, 100)]
+        [Range(0, 100, ErrorMessage="Mark has to be within 0 to 100")]
         public double Mark { get; set; }
 
         public ResultGrade Grade {
