@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Collections.Specialized;
 
@@ -11,6 +8,9 @@ namespace BUEnrolment.Models
     public class Result
     {
 
+        /// <summary>
+        /// Representation of grade
+        /// </summary>
         public enum ResultGrade
         {
             HighDistinction = 4,
@@ -20,20 +20,34 @@ namespace BUEnrolment.Models
             Fail = 0
         }
 
+        /// <summary>
+        /// Unique ID
+        /// </summary>
         [Key]
         public int Id { get; set; }
+
+        /// <summary>
+        /// Foreign Key
+        /// </summary>
         public Subject Subject { get; set; }
 
+        /// <summary>
+        /// Result marks
+        /// </summary>
         [Required]
         [Range(0, 100, ErrorMessage="Mark has to be within 0 to 100")]
         public double Mark { get; set; }
 
+        /// <summary>
+        /// Calculate grade from Mark at runtime according to app settings
+        /// </summary>
         public ResultGrade Grade {
             get
             {
                 NameValueCollection appSettings = ConfigurationManager.AppSettings;
                 ResultGrade grade;
 
+                // Conversion..
                 if (Mark >= Convert.ToInt32(appSettings["HighDistinction"]))
                 {
                     grade = ResultGrade.HighDistinction;
@@ -59,10 +73,12 @@ namespace BUEnrolment.Models
             }
         }
 
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Result()
         {
-
+            // do nothing
         }
     }
 }
