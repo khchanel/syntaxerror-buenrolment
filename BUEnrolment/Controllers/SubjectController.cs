@@ -134,12 +134,58 @@ namespace BUEnrolment.Controllers
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
-                    //var entry = ex.Entries.Single();
-                    //var databaseValues = (Subject)entry.GetDatabaseValues().ToObject();
-                    //var clientValues = (Subject)entry.Entity;
-                    ModelState.AddModelError(string.Empty, "This record has been edited while you "+
-                        "tried to edt it please refresh browser");
-                    ex.Entries.Single().Reload();
+                    var entry = ex.Entries.Single();
+                    var databaseValues = (Subject)entry.GetDatabaseValues().ToObject();
+                    var clientValues = (Subject)entry.Entity;
+
+                    ModelState.AddModelError(string.Empty, "The record you attempted to edit "
+                    + "was modified by another user after you got the original value. The "
+                    + "edit operation was canceled and the current values in the database "
+                    + "have been displayed. If you still want to edit this record, click "
+                    + "the Save button again. Otherwise click the Back to List hyperlink.");
+
+                    if (databaseValues.SubjectNumber != clientValues.SubjectNumber)
+                    {
+                        ModelState.AddModelError("SubjectNumber", "Current Subject Number: " + databaseValues.SubjectNumber);
+                    }
+
+                    if (databaseValues.Name != clientValues.Name)
+                    {
+                        ModelState.AddModelError("Name", "Current Value: " + databaseValues.Name);
+                    }
+
+                    if (databaseValues.MaxEnrolment != clientValues.MaxEnrolment)
+                    {
+                        ModelState.AddModelError("MaxEnrolment", "Current Max Enrolment: " + databaseValues.Name);
+                    }
+
+                    //does not work - does not display database values (not getting database value prerequisites)
+                    var clientGroups = clientValues.Prerequisites.ToLookup(i => i);
+                    var databaseGroups = databaseValues.Prerequisites.ToLookup(i => i);                  
+                    
+                    if (clientGroups.Count != databaseGroups.Count ||
+                        clientGroups.All(g => g.Count() != databaseGroups[g.Key].Count()))
+                    {
+                        if (databaseValues.Prerequisites.Count != 0)
+                        {
+                            foreach (var prerequisite in databaseValues.Prerequisites)
+                            {
+                                ModelState.AddModelError("Prerequisites", "Current Prerequisite: " + prerequisite.Name);
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Prerequisites", "Current Prerequisites: (none)");
+                        }
+                        
+                    }
+
+                    if (databaseValues.Description != clientValues.Description)
+                    {
+                        ModelState.AddModelError("Description", "Current Description: " + databaseValues.Description);
+                    }
+
+                    subject.Timestamp = databaseValues.Timestamp;
                 }
             }
             List<Subject> NonPrerequisites = db.Subjects.ToList().Except(SelectedPrerequisites).ToList();
@@ -152,13 +198,17 @@ namespace BUEnrolment.Controllers
         //
         // GET: /Subject/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(bool? concurrencyError, int id = 0)
         {
-            Subject subject = db.Subjects.Find(id);
-            if (subject == null)
+            if (concurrencyError.GetValueOrDefault())
             {
-                return HttpNotFound();
+                ViewBag.ConcurrencyErrorMessage = "The record you attempted to delete "
+                    + "was modified by another user after you got the original values. "
+                    + "The delete operation was canceled. If you still want to delete this "
+                    + "record, click the Delete button again. Otherwise "
+                    + "click the Back to List hyperlink.";
             }
+            Subject subject = db.Subjects.Find(id);
             return View(subject);
         }
 
@@ -169,10 +219,23 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Subject subject)
         {
+
             subject.Active = false;
             db.Entry(subject).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            try
+            {
+                subject.Active = false;
+                db.Entry(subject).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return RedirectToAction("Delete",
+                    new System.Web.Routing.RouteValueDictionary { { "concurrencyError", true } });
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
