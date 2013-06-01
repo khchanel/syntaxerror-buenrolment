@@ -64,7 +64,7 @@ namespace BUEnrolment.Controllers
                 subject.EnrolledStudents = new List<Student>();
                 db.SaveChanges();
 
-                return RedirectToAction("Subject");
+                return RedirectToAction("Index", "Subject");
             }
             else
             {
