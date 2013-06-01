@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using BUEnrolment.Models;
 using WebMatrix.WebData;
+using System.Data.Entity.Infrastructure;
 
 namespace BUEnrolment.Controllers
 {
@@ -126,8 +127,20 @@ namespace BUEnrolment.Controllers
                     SelectedPrerequisites = db.Subjects.Where(m => PrerequisiteList.Contains(m.Id)).ToList();
                     SelectedPrerequisites.ForEach(m => subject.Prerequisites.Add(m));
                 }
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    //var entry = ex.Entries.Single();
+                    //var databaseValues = (Subject)entry.GetDatabaseValues().ToObject();
+                    //var clientValues = (Subject)entry.Entity;
+                    ModelState.AddModelError(string.Empty, "This record has been edited while you "+
+                        "tried to edt it please refresh browser");
+                    ex.Entries.Single().Reload();
+                }
             }
             List<Subject> NonPrerequisites = db.Subjects.ToList().Except(SelectedPrerequisites).ToList();
             NonPrerequisites.Remove(db.Subjects.Find(id));

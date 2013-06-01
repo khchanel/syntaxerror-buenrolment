@@ -59,6 +59,7 @@
             @Html.ValidationMessageFor(model => model.Description)
         </div>
             @Html.HiddenFor(model => model.Active)
+            @Html.HiddenFor(model => model.Timestamp)
         <p>
             <input type="submit" onclick="selectAllItems('PrerequisiteList')" value="Save" />
         </p>

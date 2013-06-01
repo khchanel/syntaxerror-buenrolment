@@ -24,6 +24,9 @@ namespace BUEnrolment.Models
         [Display(Name = "Enrolled Students")]
         public virtual List<Student> EnrolledStudents { get; set; }
 
+        [Timestamp]
+        public Byte[] Timestamp { get; set; }
+
         public Subject()
         {
             this.Prerequisites = new List<Subject>();
