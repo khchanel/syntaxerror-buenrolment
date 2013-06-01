@@ -23,7 +23,7 @@ namespace BUEnrolment.Models
 
         [Key]
         public int Id { get; set; }
-        public Subject subject { get; set; }
+        public Subject Subject { get; set; }
         public double Mark { get; set; }
         public ResultGrade Grade {
             get
