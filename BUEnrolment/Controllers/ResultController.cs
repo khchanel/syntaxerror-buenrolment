@@ -43,6 +43,11 @@ namespace BUEnrolment.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            else
+            {
+                Subject subject = db.Subjects.Include(s => s.EnrolledStudents).Include(s => s.EnrolledStudents.Select(e => e.CompletedSubject)).FirstOrDefault(s => s.Id == id);
+                ViewBag.subject = subject;
+            }
 
             return View(results);
         }
