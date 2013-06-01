@@ -55,16 +55,16 @@ namespace BUEnrolment.Controllers
 
                 for (int i = 0; i < subject.EnrolledStudents.Count; i++)
                 {
-                    Student enrolledStudent = subject.EnrolledStudents[i];
-                    results[i].Subject = subject;
-                    enrolledStudent.CompleteSubject(results[i]);
+                    if (results[i].Mark != null)
+                    {
+                        results[i].Subject = subject;
+                        subject.EnrolledStudents[i].CompleteSubject(results[i]);
+                        subject.EnrolledStudents.Remove(subject.EnrolledStudents[i]);
+                        db.SaveChanges();
+                    }
                 }
 
-                db.SaveChanges();
-                subject.EnrolledStudents = new List<Student>();
-                db.SaveChanges();
-
-                return RedirectToAction("Index", "Subject");
+                return RedirectToAction("Create");
             }
             else
             {

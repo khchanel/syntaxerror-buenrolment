@@ -34,9 +34,8 @@ namespace BUEnrolment.Models
         /// <summary>
         /// Result marks
         /// </summary>
-        [Required]
         [Range(0, 100, ErrorMessage="Mark has to be within 0 to 100")]
-        public double Mark { get; set; }
+        public double? Mark { get; set; }
 
         /// <summary>
         /// Calculate grade from Mark at runtime according to app settings
