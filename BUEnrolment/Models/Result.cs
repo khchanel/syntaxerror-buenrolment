@@ -31,19 +31,19 @@ namespace BUEnrolment.Models
                 NameValueCollection appSettings = ConfigurationManager.AppSettings;
                 ResultGrade grade;
 
-                if (Mark >= Convert.ToDouble(appSettings["HighDistinction"]))
+                if (Mark >= Convert.ToInt32(appSettings["HighDistinction"]))
                 {
                     grade = ResultGrade.HighDistinction;
                 }
-                else if (Mark >= Convert.ToDouble(appSettings["Distinction"]))
+                else if (Mark >= Convert.ToInt32(appSettings["Distinction"]))
                 {
                     grade = ResultGrade.Distinction;
                 }
-                else if (Mark >= Convert.ToDouble(appSettings["Credit"]))
+                else if (Mark >= Convert.ToInt32(appSettings["Credit"]))
                 {
                     grade = ResultGrade.Credit;
                 }
-                else if (Mark >= Convert.ToDouble(appSettings["Pass"]))
+                else if (Mark >= Convert.ToInt32(appSettings["Pass"]))
                 {
                     grade = ResultGrade.Pass;
                 }
