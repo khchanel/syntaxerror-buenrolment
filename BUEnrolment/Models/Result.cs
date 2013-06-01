@@ -13,11 +13,11 @@ namespace BUEnrolment.Models
 
         public enum ResultGrade
         {
-            HighDistinction,
-            Distinction,
-            Credit,
-            Pass,
-            Fail
+            HighDistinction = 4,
+            Distinction = 3,
+            Credit = 2,
+            Pass = 1,
+            Fail = 0
         }
 
         private double mark;
