@@ -18,7 +18,7 @@ namespace BUEnrolment.Controllers
         //
         // GET: /Result/
 
-        public ActionResult Index(int id)
+        public ActionResult Create(int id)
         {
             Subject subject = db.Subjects.Include(s => s.EnrolledStudents).Include(s => s.EnrolledStudents.Select(e => e.CompletedSubject)).FirstOrDefault(s => s.Id == id);
             ViewBag.subject = subject;
@@ -27,7 +27,7 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(List<Result> results, int Id)
+        public ActionResult Create(List<Result> results, int Id)
         {
             if (ModelState.IsValid)
             {
@@ -52,96 +52,8 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Details()
         {
-           /* Result result = db.Results.Find(id);
-            if (result == null)
-            {
-                return HttpNotFound();
-            }
-            return View(result);*/
-
             Student student = db.Students.Include(s => s.CompletedSubject).Include(s => s.CompletedSubject.Select(c => c.Subject)).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
             return View(student.CompletedSubject);
-
-        }
-
-        //
-        // GET: /Result/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Result/Create
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Result result)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Results.Add(result);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(result);
-        }
-
-        //
-        // GET: /Result/Edit/5
-
-        public ActionResult Edit(int id = 0)
-        {
-            Result result = db.Results.Find(id);
-            if (result == null)
-            {
-                return HttpNotFound();
-            }
-            return View(result);
-        }
-
-        //
-        // POST: /Result/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Result result)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(result).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(result);
-        }
-
-        //
-        // GET: /Result/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Result result = db.Results.Find(id);
-            if (result == null)
-            {
-                return HttpNotFound();
-            }
-            return View(result);
-        }
-
-        //
-        // POST: /Result/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Result result = db.Results.Find(id);
-            db.Results.Remove(result);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

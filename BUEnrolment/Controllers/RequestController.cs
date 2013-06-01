@@ -24,7 +24,6 @@ namespace BUEnrolment.Controllers
             if (Roles.IsUserInRole("Admin"))
             {
                 StudentList = db.Students.Where(s => s.Requests.Any(r => r.Status == "Pending")).Include(s => s.Requests.Select(r => r.Subject)).ToList();
-                    //db.Students.Where(s => s.Requests.Where(r => r.Status == "Pending"));
             }
             else if (Roles.IsUserInRole("Student"))
             {
@@ -38,26 +37,6 @@ namespace BUEnrolment.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(Request request)
-        {
-            return View(db.Requests.ToList());
-        }
-
-        //
-        // GET: /Request/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Request request = db.Requests.Find(id);
-            if (request == null)
-            {
-                return HttpNotFound();
-            }
-            return View(request);
-        }
-
         //
         // GET: /Request/Create
 
@@ -67,24 +46,6 @@ namespace BUEnrolment.Controllers
             ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
             ViewBag.CurrentStudent = student;
             return View();
-        }
-
-        public ActionResult Approve(int requestId, int studentId)
-        {
-            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);
-            request.Status = "Approve";
-            db.Entry(request).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Enrol", "Student", new { studentId = studentId, subjectId = request.Subject.Id });
-        }
-
-        public ActionResult Disapprove(int Id)
-        {
-            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
-            request.Status = "Disapprove";
-            db.Entry(request).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         // 
@@ -110,57 +71,20 @@ namespace BUEnrolment.Controllers
             return View(request);
         }
 
-        //
-        // GET: /Request/Edit/5
-
-        public ActionResult Edit(int id = 0)
+        public ActionResult Approve(int requestId, int studentId)
         {
-            Request request = db.Requests.Find(id);
-            if (request == null)
-            {
-                return HttpNotFound();
-            }
-            return View(request);
+            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);
+            request.Status = "Approve";
+            db.Entry(request).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Enrol", "Student", new { studentId = studentId, subjectId = request.Subject.Id });
         }
 
-        //
-        // POST: /Request/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Request request)
+        public ActionResult Disapprove(int Id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(request).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(request);
-        }
-
-        //
-        // GET: /Request/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Request request = db.Requests.Find(id);
-            if (request == null)
-            {
-                return HttpNotFound();
-            }
-            return View(request);
-        }
-
-        //
-        // POST: /Request/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Request request = db.Requests.Find(id);
-            db.Requests.Remove(request);
+            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
+            request.Status = "Disapprove";
+            db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
