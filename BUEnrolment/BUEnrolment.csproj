@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Enrolment.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Student.cs" />
@@ -231,52 +232,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Student\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Student\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Student\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Student\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Student\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Student\Enrol.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Request\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Request\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Request\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Request\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Request\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Result\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Result\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Result\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Result\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Result\Delete.cshtml" />
+    <Content Include="Views\Result\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Subject\Enrolled.cshtml" />

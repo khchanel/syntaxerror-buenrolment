@@ -1,45 +1,42 @@
-﻿@model BUEnrolment.Models.Result
-
-@using System.Web.Optimization
+﻿@model IList<BUEnrolment.Models.Result>
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Index";
 }
 
-<h2>Create</h2>
-
+<h2>Index</h2>
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
-    <fieldset>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Mark)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Mark)
-            @Html.ValidationMessageFor(model => model.Mark)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Grade)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Grade)
-            @Html.ValidationMessageFor(model => model.Grade)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayName("Student Number")
+        </th>
+        <th>
+            @Html.DisplayName("Mark")
+        </th>
+        <th></th>
+    </tr>
+@for (int i = 0; i < ViewBag.subject.EnrolledStudents.Count; i++)
+{
+        <tr>
+        <td>
+            @Html.DisplayName((string)ViewBag.subject.EnrolledStudents[i].Username)
+        </td>
+        <td>
+            @Html.EditorFor(model => model[i].Mark)
+        </td>
+    </tr>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</table>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+<p>
+    <input type="hidden" name="Id" value="@ViewBag.subject.Id" />
+    <input type="submit" value="Submit" />
+</p>
 }
