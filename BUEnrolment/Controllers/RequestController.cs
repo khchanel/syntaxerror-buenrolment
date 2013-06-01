@@ -65,7 +65,7 @@ namespace BUEnrolment.Controllers
                 db.Entry(currentStudent).Collection(m => m.Requests).Load();
                 currentStudent.Requests.Add(request);
                 db.SaveChanges();
-                return RedirectToAction("Subject");
+                return RedirectToAction("Index");
             }
 
             return View(request);
