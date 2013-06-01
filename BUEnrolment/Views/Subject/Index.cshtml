@@ -43,7 +43,7 @@
             @if(Roles.IsUserInRole("Admin")) {
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) 
                 @Html.ActionLink("Delete", "Delete", new { id=item.Id }) 
-                 @Html.ActionLink("Result", "Index", "Result" ,new { id=item.Id },null) 
+                 @Html.ActionLink("Result", "Create", "Result" ,new { id=item.Id },null) 
                 
             }
             else if (Roles.IsUserInRole("Student"))
