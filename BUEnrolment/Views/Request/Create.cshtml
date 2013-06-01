@@ -11,7 +11,8 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-
+        @if(!ViewBag.CurrentStudent.FullyEnrolled())
+        {
         <div class="editor-label">
             @Html.LabelFor(model => model.Subject)
         </div>
@@ -30,6 +31,11 @@
         <p>
             <input type="submit" value="Create" />
         </p>
+        }
+        else
+        {
+            <p>Student is fully enrolled</p>   
+        }
     </fieldset>
 }
 
