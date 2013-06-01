@@ -27,11 +27,11 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(List<Result> results, int Id)
+        public ActionResult Create(List<Result> results, int id)
         {
             if (ModelState.IsValid)
             {
-                Subject subject = db.Subjects.Include(s => s.EnrolledStudents).FirstOrDefault(s => s.Id == Id);
+                Subject subject = db.Subjects.Include(s => s.EnrolledStudents).FirstOrDefault(s => s.Id == id);
                 for (int i = 0; i < subject.EnrolledStudents.Count; i++)
                 {
                     Student enrolledStudent = subject.EnrolledStudents[i];
