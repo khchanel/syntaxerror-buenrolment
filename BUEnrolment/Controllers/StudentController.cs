@@ -27,14 +27,24 @@ namespace BUEnrolment.Controllers
         // GET: /Student/Enrol/5
         public ActionResult Enrol(int studentId, int subjectId)
         {
-            Student student = db.Students.FirstOrDefault(s => s.Id == studentId);
+            Student student = db.Students.Include(s => s.Requests).FirstOrDefault(s => s.Id == studentId);
             Subject subject = db.Subjects.FirstOrDefault(s => s.Id == subjectId);
-          
-            if (!student.FullyEnrolled())
+
+            if (!student.FullyEnrolled() && !subject.MaxEnrolmentIsReached())
             {
                 db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
                 student.EnrolSubject(subject);
                 db.SaveChanges();
+            }
+            else
+            {
+                if (student.FullyEnrolled())
+                {
+                    foreach (Request request in student.Requests)
+                    {
+                        request.Status = "Disapprove";
+                    }
+                }
             }
 
             if (Roles.IsUserInRole("Admin"))

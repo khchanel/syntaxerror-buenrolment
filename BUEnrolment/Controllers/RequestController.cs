@@ -20,7 +20,6 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Index()
         {
-
             List<Student> StudentList = new List<Student>();
             if (Roles.IsUserInRole("Admin"))
             {
@@ -64,9 +63,9 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Create()
         {
-            Student student = db.Students.FirstOrDefault();
-            //ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
+            Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault();
             ViewBag.RequestableSubjects = new SelectList(db.Subjects.ToList(), "Id", "Name");
+            ViewBag.CurrentStudent = student;
             return View();
         }
 
@@ -75,11 +74,7 @@ namespace BUEnrolment.Controllers
             Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);
             request.Status = "Approve";
             db.Entry(request).State = EntityState.Modified;
-            /*db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
-            student.EnrolSubject(request.Subject);*/
-
             db.SaveChanges();
-            //subject = request.Subject, student = requestingStudent
             return RedirectToAction("Enrol", "Student", new { studentId = studentId, subjectId = request.Subject.Id });
         }
 
