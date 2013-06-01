@@ -14,7 +14,9 @@
         <th>
             @Html.DisplayName("Mark")
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayName("Grade")
+        </th>
     </tr>
     @foreach (var result in Model)
     {
@@ -24,6 +26,9 @@
         </td>
         <td>
              @Html.DisplayFor(model => result.Mark)
+        </td>
+        <td>
+            @Html.DisplayFor(model => result.Grade)
         </td>
     </tr>
     }
