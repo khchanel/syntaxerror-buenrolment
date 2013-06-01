@@ -20,11 +20,14 @@ namespace BUEnrolment.Models
             Fail = 0
         }
 
-
         [Key]
         public int Id { get; set; }
         public Subject Subject { get; set; }
+
+        [Required]
+        [Range(0, 100)]
         public double Mark { get; set; }
+
         public ResultGrade Grade {
             get
             {
