@@ -67,6 +67,12 @@ namespace BUEnrolment.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            else
+            {
+                Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault();
+                ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
+                ViewBag.CurrentStudent = student;
+            }
 
             return View(request);
         }
