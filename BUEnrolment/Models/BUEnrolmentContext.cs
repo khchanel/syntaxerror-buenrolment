@@ -7,6 +7,9 @@ using System.Data.Entity;
 
 namespace BUEnrolment.Models
 {
+    /// <summary>
+    /// Database context for EntifyFramework
+    /// </summary>
     public class BUEnrolmentContext : DbContext
     {
         public DbSet<Subject> Subjects { get; set; }
@@ -14,11 +17,20 @@ namespace BUEnrolment.Models
         public DbSet<Result> Results { get; set; }
         public DbSet<Request> Requests { get; set; }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public BUEnrolmentContext()
             : base("BUEnrolmentContext")
         {
+            // do nothing
         }
 
+
+        /// <summary>
+        /// Create entity relations
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Subject>().
