@@ -259,9 +259,6 @@ namespace BUEnrolment.Controllers
         public ActionResult DeleteConfirmed(Subject subject)
         {
 
-            subject.Active = false;
-            db.Entry(subject).State = EntityState.Modified;
-
             try
             {
                 subject.Active = false;
