@@ -11,17 +11,30 @@ using System.Web.Security;
 
 namespace BUEnrolment.Controllers
 {
+    /// <summary>
+    /// Controller for Student related pages
+    /// </summary>
     public class StudentController : Controller
     {
+        /// <summary>
+        /// Database context
+        /// </summary>
         private BUEnrolmentContext db = new BUEnrolmentContext();
 
-        //
-        // GET: /Student/Enrol/5
+        /// <summary>
+        /// GET: /Student/Enrol/5
+        ///
+        /// 
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="subjectId"></param>
+        /// <returns></returns>
         public ActionResult Enrol(int studentId, int subjectId)
         {
             Student student = db.Students.Include(s => s.Requests).FirstOrDefault(s => s.Id == studentId);
             Subject subject = db.Subjects.FirstOrDefault(s => s.Id == subjectId);
 
+            // check if the enrollment limits are not reached
             if (!student.FullyEnrolled() && !subject.MaxEnrolmentIsReached())
             {
                 db.Entry(student).Collection(s => s.EnrolledSubjects).Load();
@@ -30,6 +43,7 @@ namespace BUEnrolment.Controllers
             }
             else
             {
+                // if student has reached enrolment limit, disapprove all his requests
                 if (student.FullyEnrolled())
                 {
                     foreach (Request request in student.Requests)
