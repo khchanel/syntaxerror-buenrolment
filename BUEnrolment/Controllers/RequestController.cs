@@ -58,21 +58,36 @@ namespace BUEnrolment.Controllers
             if (ModelState.IsValid)
             {
                 Student currentStudent = db.Students.FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
+                Subject subject = db.Subjects.FirstOrDefault(s => s.Id == selectedSubject);
 
-                request.Subject = db.Subjects.FirstOrDefault(s => s.Id == selectedSubject);
+                // user not logged in or not found
+                if (currentStudent == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                request.Subject = subject;
                 request.Status = "Pending";
                 db.Entry(currentStudent).State = EntityState.Modified;
                 db.Entry(currentStudent).Collection(m => m.Requests).Load();
-                currentStudent.Requests.Add(request);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                // check if the student has already made request for the same subject
+                if (currentStudent.Requests.All(r => r.Subject.Id != selectedSubject))
+                {
+                    currentStudent.Requests.Add(request);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "You have previously made a request for this subject already.");
+                }
             }
-            else
-            {
-                Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault();
-                ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
-                ViewBag.CurrentStudent = student;
-            }
+
+            Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault();
+            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
+            ViewBag.CurrentStudent = student;
 
             return View(request);
         }
