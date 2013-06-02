@@ -7,19 +7,48 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BUEnrolment.Models
 {
+    /// <summary>
+    /// Student model
+    /// </summary>
     public class Student
     {
+        /// <summary>
+        /// Unique ID for database
+        /// </summary>
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        /// <summary>
+        /// Student username
+        /// </summary>
         public string Username { get; set; }
+
+        /// <summary>
+        /// Student full name
+        /// </summary>
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
+        /// <summary>
+        /// List of Enrolled Subjects
+        /// </summary>
         public virtual List<Subject> EnrolledSubjects { get; set; }
+
+        /// <summary>
+        /// List of requests owned by the student
+        /// </summary>
         public virtual List<Request> Requests { get; set; }
+
+        /// <summary>
+        /// List of Result of completed subject by the student
+        /// </summary>
         public virtual List<Result> CompletedSubject { get; set; }
 
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Student()
         {
             Requests = new List<Request>();
@@ -27,21 +56,39 @@ namespace BUEnrolment.Models
             CompletedSubject = new List<Result>();
         }
 
+        /// <summary>
+        /// Add a subject to student's enrolledSubject list
+        /// </summary>
+        /// <param name="subject"></param>
         public void EnrolSubject(Subject subject)
         {
             EnrolledSubjects.Add(subject);
         }
 
+        /// <summary>
+        /// Add result for a completed subject of the student
+        /// </summary>
+        /// <param name="result"></param>
         public void CompleteSubject(Result result)
         {
             CompletedSubject.Add(result);
         }
 
+
+        /// <summary>
+        /// Check if the student reached max enrolment
+        /// </summary>
+        /// <returns>true if enrolment limit is met</returns>
         public bool FullyEnrolled()
         {
             return EnrolledSubjects.Count >= 4;
         }
 
+        /// <summary>
+        /// Get a List of subjects that the student can enroll
+        /// </summary>
+        /// <param name="allSubjects"></param>
+        /// <returns></returns>
         public List<Subject> GetEnrollableSubjects(List<Subject> allSubjects)
         {
             RemoveCurrentlyEnrolled(ref allSubjects);
@@ -53,6 +100,11 @@ namespace BUEnrolment.Models
             return allSubjects;
         }
 
+        /// <summary>
+        /// Get a list of subject that the student can make request to enroll
+        /// </summary>
+        /// <param name="allSubjects"></param>
+        /// <returns></returns>
         public List<Subject> GetRequestableSubjects(List<Subject> allSubjects)
         {
             RemoveCurrentlyEnrolled(ref allSubjects);
@@ -62,6 +114,7 @@ namespace BUEnrolment.Models
 
             return allSubjects;
         }
+
 
         private void RemoveCurrentlyEnrolled(ref List<Subject> enrollableSubjects)
         {
