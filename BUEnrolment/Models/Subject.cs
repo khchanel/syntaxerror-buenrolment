@@ -23,11 +23,13 @@ namespace BUEnrolment.Models
         /// Subject number
         /// </summary>
         [Display(Name = "Number")]
+        [Required]
         public string SubjectNumber { get; set; }
 
         /// <summary>
         /// Subject name
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
@@ -39,6 +41,7 @@ namespace BUEnrolment.Models
         /// Maximum enrolment limit for the subject
         /// </summary>
         [Display(Name = "Max Enrolment")]
+        [Required]
         public int MaxEnrolment { get; set; }
 
         /// <summary>
