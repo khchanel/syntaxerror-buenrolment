@@ -5,6 +5,9 @@ using System.Collections.Specialized;
 
 namespace BUEnrolment.Models
 {
+    /// <summary>
+    /// Model representation of Result
+    /// </summary>
     public class Result
     {
 
@@ -27,7 +30,7 @@ namespace BUEnrolment.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Foreign Key
+        /// Reference to Subject
         /// </summary>
         public Subject Subject { get; set; }
 
