@@ -12,16 +12,27 @@ using System.Data.Entity.Infrastructure;
 
 namespace BUEnrolment.Controllers
 {
+    /// <summary>
+    /// Controller for subject related pages
+    /// </summary>
     public class SubjectController : Controller
     {
+        /// <summary>
+        /// database context for entity framework
+        /// </summary>
         private BUEnrolmentContext db = new BUEnrolmentContext();
 
-        //
-        // GET: /Subject/
-
+        /// <summary>
+        /// GET: /Subject/
+        /// 
+        /// List subject page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             List<Subject> allSubjects = db.Subjects.Where(s => s.Active == true).ToList();
+
+            // if user is student, filter down the list to only show what they can enroll
             if (Roles.IsUserInRole("Student")) 
             {
                 Student student = db.Students.Include(m => m.EnrolledSubjects).FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
@@ -32,9 +43,13 @@ namespace BUEnrolment.Controllers
             
         }
 
-        //
-        // GET: /Subject/Details/5
-
+        /// <summary>
+        /// GET: /Subject/Details/5
+        ///
+        /// View subject details pages
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int id = 0)
         {
             Subject subject = db.Subjects.Find(id);
@@ -45,9 +60,10 @@ namespace BUEnrolment.Controllers
             return View(subject);
         }
 
-        //
-        // GET: /Subject/Create
-
+        /// <summary>
+        /// Student View Enrolled subject list
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Enrolled()
         {
             Student student = db.Students.Include(m => m.EnrolledSubjects).FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
@@ -59,6 +75,12 @@ namespace BUEnrolment.Controllers
             return View(student.EnrolledSubjects);
         }
 
+        /// <summary>
+        /// GET: /Subject/Create
+        ///
+        /// Create subject form page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             SelectList allSubjects = new SelectList(db.Subjects, "Id", "Name");
@@ -66,9 +88,12 @@ namespace BUEnrolment.Controllers
             return View();
         }
 
-        //
-        // POST: /Subject/Create
-
+        /// <summary>
+        /// Create subject handler
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="SelectedPrerequisites"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
@@ -91,9 +116,11 @@ namespace BUEnrolment.Controllers
             return View(subject);
         }
 
-        //
-        // GET: /Subject/Edit/5
-
+        /// <summary>
+        /// Subject edit form page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int id = 0)
         {
             Subject subject = db.Subjects.Find(id);
@@ -107,9 +134,14 @@ namespace BUEnrolment.Controllers
             ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
             return View(subject);
         }
-        //
-        // POST: /Subject/Edit/5
 
+        /// <summary>
+        /// Subject edit handler
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="PrerequisiteList"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Subject subject, List<int> PrerequisiteList, int id = 0)
@@ -138,6 +170,7 @@ namespace BUEnrolment.Controllers
                     var databaseValues = (Subject)entry.GetDatabaseValues().ToObject();
                     var clientValues = (Subject)entry.Entity;
 
+                    /* Concurrency checking */
                     ModelState.AddModelError(string.Empty, "The record you attempted to edit "
                     + "was modified by another user after you got the original value. The "
                     + "edit operation was canceled and the current values in the database "
@@ -158,6 +191,7 @@ namespace BUEnrolment.Controllers
                     {
                         ModelState.AddModelError("MaxEnrolment", "Current Max Enrolment: " + databaseValues.Name);
                     }
+                    /* end concurrency checking */
 
                     //does not work - does not display database values (not getting database value prerequisites)
                     var clientGroups = clientValues.Prerequisites.ToLookup(i => i);
@@ -195,9 +229,12 @@ namespace BUEnrolment.Controllers
             return View(subject);
         }
 
-        //
-        // GET: /Subject/Delete/5
-
+        /// <summary>
+        /// Subject Delete
+        /// </summary>
+        /// <param name="concurrencyError"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(bool? concurrencyError, int id = 0)
         {
             if (concurrencyError.GetValueOrDefault())
@@ -212,9 +249,11 @@ namespace BUEnrolment.Controllers
             return View(subject);
         }
 
-        //
-        // POST: /Subject/Delete/5
-
+        /// <summary>
+        /// Subject delete confirmation
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Subject subject)
