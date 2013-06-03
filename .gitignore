@@ -110,3 +110,7 @@ UpgradeLog*.XML
 
 # database files
 /BUEnrolment/App_Data/*
+
+
+# OS thumbnail shit
+.*DS_Store
