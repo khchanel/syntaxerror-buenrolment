@@ -158,10 +158,6 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Subject subject, List<int> PrerequisiteList, int id = 0)
         {
-            if (subject.Active == false)
-            {
-                return RedirectToAction("Index");
-            }
             List<Subject> SelectedPrerequisites = new List<Subject>();
             
             if (ModelState.IsValid)
@@ -185,6 +181,11 @@ namespace BUEnrolment.Controllers
                     var entry = ex.Entries.Single();
                     var databaseValues = (Subject)entry.GetDatabaseValues().ToObject();
                     var clientValues = (Subject)entry.Entity;
+
+                    if (databaseValues.Active == false)
+                    {
+                        return RedirectToAction("Index");
+                    }
 
                     /* Concurrency checking */
                     ModelState.AddModelError(string.Empty, "The record you attempted to edit "
