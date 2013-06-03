@@ -98,19 +98,23 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
-            ViewBag.allSubjects = new SelectList(db.Subjects, "Id", "Name");
-            if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
+            bool subjectInContext = (db.Subjects.FirstOrDefault(s => s.Id == subject.Id) != null) ? true : false;
+            if (subjectInContext)
             {
-                //Get a list of subject where the id is contained within the list of selectedPrerequisites
-                List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
-                Prerequisites.ForEach(m => subject.Prerequisites.Add(m));
-            }
-            subject.Active = true;
-            if (ModelState.IsValid)
-            {
-                db.Subjects.Add(subject);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.allSubjects = new SelectList(db.Subjects, "Id", "Name");
+                if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
+                {
+                    //Get a list of subject where the id is contained within the list of selectedPrerequisites
+                    List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+                    Prerequisites.ForEach(m => subject.Prerequisites.Add(m));
+                }
+                subject.Active = true;
+                if (ModelState.IsValid)
+                {
+                    db.Subjects.Add(subject);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(subject);
@@ -127,6 +131,10 @@ namespace BUEnrolment.Controllers
             if (subject == null)
             {
                 return HttpNotFound();
+            }
+            else if (subject.Active == false)
+            {
+                return RedirectToAction("Index");
             }
             List<Subject> NonPrerequisites = db.Subjects.ToList().Except(subject.Prerequisites).ToList();
             NonPrerequisites.Remove(subject);
@@ -146,6 +154,10 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Subject subject, List<int> PrerequisiteList, int id = 0)
         {
+            if (subject.Active == false)
+            {
+                return RedirectToAction("Index");
+            }
             List<Subject> SelectedPrerequisites = new List<Subject>();
             
             if (ModelState.IsValid)
@@ -192,34 +204,6 @@ namespace BUEnrolment.Controllers
                         ModelState.AddModelError("MaxEnrolment", "Current Max Enrolment: " + databaseValues.Name);
                     }
                     /* end concurrency checking */
-
-                    //does not work - does not display database values (not getting database value prerequisites)
-                    var clientGroups = clientValues.Prerequisites.ToLookup(i => i);
-                    var databaseGroups = databaseValues.Prerequisites.ToLookup(i => i);                  
-                    
-                    if (clientGroups.Count != databaseGroups.Count ||
-                        clientGroups.All(g => g.Count() != databaseGroups[g.Key].Count()))
-                    {
-                        if (databaseValues.Prerequisites.Count != 0)
-                        {
-                            foreach (var prerequisite in databaseValues.Prerequisites)
-                            {
-                                ModelState.AddModelError("Prerequisites", "Current Prerequisite: " + prerequisite.Name);
-                            }
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("Prerequisites", "Current Prerequisites: (none)");
-                        }
-                        
-                    }
-
-                    if (databaseValues.Description != clientValues.Description)
-                    {
-                        ModelState.AddModelError("Description", "Current Description: " + databaseValues.Description);
-                    }
-
-                    subject.Timestamp = databaseValues.Timestamp;
                 }
             }
             List<Subject> NonPrerequisites = db.Subjects.ToList().Except(SelectedPrerequisites).ToList();
