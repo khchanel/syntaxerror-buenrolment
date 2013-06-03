@@ -42,6 +42,7 @@ namespace BUEnrolment.Models
         /// </summary>
         [Display(Name = "Max Enrolment")]
         [Required]
+        [Range(1, Int32.MaxValue)]
         public int MaxEnrolment { get; set; }
 
         /// <summary>
