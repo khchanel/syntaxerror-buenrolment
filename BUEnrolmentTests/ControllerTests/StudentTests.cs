@@ -20,7 +20,7 @@ namespace BUEnrolmentTests.ControllerTests
         {
             db = new BUEnrolmentContext();
             _students = new List<Student>();
-            _sc = new StudentController(ref db);
+            _sc = new StudentController(db);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace BUEnrolmentTests.ControllerTests
 
             _sc.Enrol(dbStudent.Id, dbSubject.Id);
 
-            Assert.AreEqual(subject.Id, dbStudent.EnrolledSubjects.FirstOrDefault().Id);
+            Assert.AreEqual(subject.Id, dbStudent.EnrolledSubjects.FirstOrDefault(s => s.SubjectNumber == "1").Id);
         }
 
         [TestMethod]

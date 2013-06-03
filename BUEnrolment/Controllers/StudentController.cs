@@ -21,7 +21,7 @@ namespace BUEnrolment.Controllers
         /// </summary>
         private BUEnrolmentContext db = new BUEnrolmentContext();
 
-        public StudentController(ref BUEnrolmentContext db)
+        public StudentController(BUEnrolmentContext db)
         {
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
             this.db = db;
