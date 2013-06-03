@@ -42,7 +42,7 @@ namespace BUEnrolment.Controllers
 
         public ActionResult Create()
         {
-            Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault();
+            Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
             ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
             ViewBag.CurrentStudent = student;
             return View();
