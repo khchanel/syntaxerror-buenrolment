@@ -169,7 +169,7 @@ namespace BUEnrolment.Models
         {
             foreach (Subject subject in enrollableSubjects
                 .Where(subject => (subject.Prerequisites
-                    .Except(CompletedSubject.Where(m => m.Mark >= 50).Where(m => m.Subject.Prerequisites.Count > 0).Select(s => s.Subject)).Any()) == remove)
+                    .Except(CompletedSubject.Where(m => m.Mark >= 50).Where(m => m.Subject.Prerequisites.Count > 0).Select(s => s.Subject)).Any(p => p.Active)) == remove)
                     .ToList())
             {
                 enrollableSubjects.Remove(subject);
