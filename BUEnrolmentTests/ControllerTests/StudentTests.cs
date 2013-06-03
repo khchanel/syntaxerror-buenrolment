@@ -74,7 +74,7 @@ namespace BUEnrolmentTests.ControllerTests
             _sc.Enrol(dbStudent.Id, dbSubject4.Id);
             _sc.Enrol(dbStudent.Id, dbSubject5.Id);
 
-            Assert.AreEqual(4, db.Students.FirstOrDefault().EnrolledSubjects.Count);
+            Assert.AreEqual(4, db.Students.FirstOrDefault(s => s.Username == "11012592").EnrolledSubjects.Count);
         }
 
         [TestMethod]
