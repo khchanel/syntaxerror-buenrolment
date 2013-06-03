@@ -108,7 +108,7 @@ namespace BUEnrolmentTests.ControllerTests
             List<Result> results = new List<Result>();
             Subject addedSubject = (Subject)db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
 
-            ViewResult resultViewResult = (ViewResult)resultController.Create(results, addedSubject.Id);
+            //ViewResult resultViewResult = (ViewResult)resultController.Create(results, addedSubject.Id);
 
         }
     }
