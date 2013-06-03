@@ -85,6 +85,7 @@ namespace BUEnrolmentTests.ControllerTests
             db.Subjects.Add(subject);
             db.SaveChanges();
             ViewResult resultViewResult = (ViewResult)resultController.Create(subject.Id);
+
             Subject addedSubject = (Subject)db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
             Assert.AreEqual(subject.MaxEnrolment, addedSubject.MaxEnrolment);
             Assert.AreEqual(subject.Name, addedSubject.Name);
@@ -108,6 +109,7 @@ namespace BUEnrolmentTests.ControllerTests
             Subject addedSubject = (Subject)db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
 
             ViewResult resultViewResult = (ViewResult)resultController.Create(results, addedSubject.Id);
+
         }
     }
 }
