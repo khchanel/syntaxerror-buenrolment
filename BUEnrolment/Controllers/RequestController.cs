@@ -43,7 +43,7 @@ namespace BUEnrolment.Controllers
         public ActionResult Create()
         {
             Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
-            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
+            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "requestId", "Name");
             ViewBag.CurrentStudent = student;
             return View();
         }
@@ -91,7 +91,7 @@ namespace BUEnrolment.Controllers
             }
 
             Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
-            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
+            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "requestId", "Name");
             ViewBag.CurrentStudent = student;
 
             return View(request);
@@ -106,9 +106,9 @@ namespace BUEnrolment.Controllers
             return RedirectToAction("Enrol", "Student", new { studentId = studentId, subjectId = request.Subject.Id });
         }
 
-        public ActionResult Disapprove(int Id)
+        public ActionResult Disapprove(int requestId, int studentId)
         {
-            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == Id);
+            Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);
             request.Status = "Disapprove";
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
