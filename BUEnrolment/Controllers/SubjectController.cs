@@ -108,8 +108,8 @@ namespace BUEnrolment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
-            bool subjectInContext = (db.Subjects.FirstOrDefault(s => s.SubjectNumber == subject.SubjectNumber) != null) ? true : false;
-            ViewBag.allSubjects = new SelectList(db.Subjects, "Id", "Name");
+            bool subjectInContext = (db.Subjects.FirstOrDefault(s => s.SubjectNumber == subject.SubjectNumber) != null);
+            ViewBag.allSubjects = new SelectList(db.Subjects.Where(s => s.Active), "Id", "Name");
             if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
             {
                 //Get a list of subject where the id is contained within the list of selectedPrerequisites
