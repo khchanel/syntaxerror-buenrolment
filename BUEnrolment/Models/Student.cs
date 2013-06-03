@@ -95,7 +95,7 @@ namespace BUEnrolment.Models
             RemovePassed(ref allSubjects);
             RemoveMaxEnrolmentReached(ref allSubjects);
             RemoveFailedThreeTimes(ref allSubjects);
-            RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref allSubjects, false);
+            RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref allSubjects, true);
 
             return allSubjects;
         }
@@ -110,7 +110,7 @@ namespace BUEnrolment.Models
             RemoveCurrentlyEnrolled(ref allSubjects);
             RemovePassed(ref allSubjects);
             RemoveMaxEnrolmentReached(ref allSubjects);
-            RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref allSubjects, true);
+            RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref allSubjects, false);
 
             return allSubjects;
         }
