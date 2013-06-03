@@ -15,7 +15,7 @@ namespace BUEnrolmentTests.ControllerTests
     [TestClass]
     public class ResultTests
     {
-        private Result _result;
+       // private Result _result;
         private List<Subject> _subjects;
         private BUEnrolmentContext db;
 
@@ -78,16 +78,36 @@ namespace BUEnrolmentTests.ControllerTests
         #endregion
 
         [TestMethod]
-        public void CheckModelDataTypeForResult()
+        public void CheckModelDataTypeForResultCreate()
         {
-            ResultController resultController = new ResultController(db);
+            ResultController resultController = new ResultController(ref db);
             Subject subject = new Subject() { Active = true, MaxEnrolment = 3, Name = "thisIsTestSubject", SubjectNumber = "123", Description = "" };
             db.Subjects.Add(subject);
             db.SaveChanges();
             ViewResult resultViewResult = (ViewResult)resultController.Create(subject.Id);
-            Assert.AreEqual(resultViewResult.ViewData["subject"], subject);
-            Subject addedSubject = resultController.db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
-            Assert.AreEqual(subject, addedSubject);
+            Subject addedSubject = (Subject)db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
+            Assert.AreEqual(subject.MaxEnrolment, addedSubject.MaxEnrolment);
+            Assert.AreEqual(subject.Name, addedSubject.Name);
+            Assert.AreEqual(subject.SubjectNumber, addedSubject.SubjectNumber);
+            Assert.AreEqual(subject.Description, addedSubject.Description);
+        }
+
+        [TestMethod]
+        public void CheckModelDataTypeForResultCreatePostBack()
+        {
+            ResultController resultController = new ResultController(ref db);
+          
+            Subject subject = new Subject() { Active = true, MaxEnrolment = 3, Name = "thisIsTestSubject", SubjectNumber = "123", Description = "" };
+            db.Subjects.Add(subject);
+            Student enrollingStudent = new Student() { Username = "TestUserName", FullName="TestFullName" };
+            db.Students.Add(enrollingStudent);
+            subject.EnrolledStudents.Add(enrollingStudent);
+            db.SaveChanges();
+
+            List<Result> results = new List<Result>();
+            Subject addedSubject = (Subject)db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
+
+            ViewResult resultViewResult = (ViewResult)resultController.Create(results, addedSubject.Id);
         }
     }
 }
