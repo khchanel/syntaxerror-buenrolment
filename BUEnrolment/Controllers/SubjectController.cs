@@ -20,7 +20,19 @@ namespace BUEnrolment.Controllers
         /// <summary>
         /// database context for entity framework
         /// </summary>
-        private BUEnrolmentContext db = new BUEnrolmentContext();
+        private IBUEnrolmentContext db;
+
+        public SubjectController() 
+            :base()
+        {
+            db = new BUEnrolmentContext();
+        }
+
+        public SubjectController(IBUEnrolmentContext context)
+            : base()
+        {
+            db = context;
+        }
 
         /// <summary>
         /// GET: /Subject/

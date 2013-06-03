@@ -167,6 +167,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\FakeBUEnrolmentContext.cs" />
+    <Compile Include="Models\FakeDbSet.cs" />
+    <Compile Include="Models\IBUEnrolmentContext.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Student.cs" />

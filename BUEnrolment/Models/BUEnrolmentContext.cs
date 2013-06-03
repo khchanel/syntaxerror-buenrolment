@@ -10,12 +10,12 @@ namespace BUEnrolment.Models
     /// <summary>
     /// Database context for EntifyFramework
     /// </summary>
-    public class BUEnrolmentContext : DbContext
+    public class BUEnrolmentContext : DbContext, IBUEnrolmentContext
     {
-        public DbSet<Subject> Subjects { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Result> Results { get; set; }
-        public DbSet<Request> Requests { get; set; }
+        public IDbSet<Subject> Subjects { get; set; }
+        public IDbSet<Student> Students { get; set; }
+        public IDbSet<Result> Results { get; set; }
+        public IDbSet<Request> Requests { get; set; }
 
         /// <summary>
         /// Default Constructor
@@ -23,7 +23,6 @@ namespace BUEnrolment.Models
         public BUEnrolmentContext()
             : base("BUEnrolmentContext")
         {
-            // do nothing
         }
 
 
