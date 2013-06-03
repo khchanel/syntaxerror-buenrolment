@@ -95,7 +95,7 @@ namespace BUEnrolment.Models
             RemovePassed(ref allSubjects);
             RemoveMaxEnrolmentReached(ref allSubjects);
             RemoveFailedThreeTimes(ref allSubjects);
-            RemovePrerequisitesNotCompleted(ref allSubjects, true);
+            RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref allSubjects, true);
 
             return allSubjects;
         }
@@ -110,17 +110,24 @@ namespace BUEnrolment.Models
             RemoveCurrentlyEnrolled(ref allSubjects);
             RemovePassed(ref allSubjects);
             RemoveMaxEnrolmentReached(ref allSubjects);
-            RemovePrerequisitesNotCompleted(ref allSubjects, false);
+            RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref allSubjects, false);
 
             return allSubjects;
         }
 
-
+        /// <summary>
+        /// Remove all the students enrolled subjects from the list of enrollable subjects
+        /// </summary>
+        /// <param name="enrollableSubjects"></param>
         private void RemoveCurrentlyEnrolled(ref List<Subject> enrollableSubjects)
         {
             enrollableSubjects = enrollableSubjects.Except(EnrolledSubjects).ToList();
         }
 
+        /// <summary>
+        /// Remove all the students passed subjects from the list of enrollable subjects
+        /// </summary>
+        /// <param name="enrollableSubjects"></param>
         private void RemovePassed(ref List<Subject> enrollableSubjects)
         {
             foreach (Result completedSubject in CompletedSubject.Where(completedSubject => completedSubject.Mark > 49))
@@ -129,6 +136,10 @@ namespace BUEnrolment.Models
             }
         }
 
+        /// <summary>
+        /// Remove subjects that have reached max enrolment from the list of enrollable subjects
+        /// </summary>
+        /// <param name="enrollableSubjects"></param>
         private void RemoveMaxEnrolmentReached(ref List<Subject> enrollableSubjects)
         {
             foreach (Subject subject in enrollableSubjects.Where(subject => subject.MaxEnrolmentIsReached()).ToList())
@@ -137,6 +148,10 @@ namespace BUEnrolment.Models
             }
         }
 
+        /// <summary>
+        /// Remove subjects that the student has failed three times from the list of enrollable subjects
+        /// </summary>
+        /// <param name="enrollableSubjects"></param>
         private void RemoveFailedThreeTimes(ref List<Subject> enrollableSubjects)
         {
             foreach (Subject subject in enrollableSubjects.Where(subject => CompletedSubject.Count(s => s.Subject == subject && s.Mark < 50) == 3).ToList())
@@ -145,9 +160,13 @@ namespace BUEnrolment.Models
             }
         }
 
-        private void RemovePrerequisitesNotCompleted(ref List<Subject> enrollableSubjects, bool remove)
+        /// <summary>
+        /// Remove or Include subjects where the subject prerequisites have not been completed
+        /// </summary>
+        /// <param name="enrollableSubjects"></param>
+        /// <param name="remove">Determines if the subject where the prerequisites have not been completed should be removed or not</param>
+        private void RemoveOrIncludeWhenSubjectPrerequisitesNotCompleted(ref List<Subject> enrollableSubjects, bool remove)
         {
-
             foreach (Subject subject in enrollableSubjects
                 .Where(subject => (subject.Prerequisites
                     .Except(CompletedSubject.Where(m => m.Mark >= 50).Where(m => m.Subject.Prerequisites.Count > 0).Select(s => s.Subject)).Any()) == remove)
