@@ -99,15 +99,15 @@ namespace BUEnrolment.Controllers
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
             bool subjectInContext = (db.Subjects.FirstOrDefault(s => s.SubjectNumber == subject.SubjectNumber) != null) ? true : false;
-            if (subjectInContext)
+            ViewBag.allSubjects = new SelectList(db.Subjects, "Id", "Name");
+            if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
             {
-                ViewBag.allSubjects = new SelectList(db.Subjects, "Id", "Name");
-                if (SelectedPrerequisites != null && SelectedPrerequisites.Count > 0)
-                {
-                    //Get a list of subject where the id is contained within the list of selectedPrerequisites
-                    List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
-                    Prerequisites.ForEach(m => subject.Prerequisites.Add(m));
-                }
+                //Get a list of subject where the id is contained within the list of selectedPrerequisites
+                List<Subject> Prerequisites = db.Subjects.Where(m => SelectedPrerequisites.Contains(m.Id)).ToList();
+                Prerequisites.ForEach(m => subject.Prerequisites.Add(m));
+            }
+            if (!subjectInContext)
+            {
                 subject.Active = true;
                 if (ModelState.IsValid)
                 {
@@ -115,6 +115,10 @@ namespace BUEnrolment.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "The subject already exist in the system");
             }
 
             return View(subject);
