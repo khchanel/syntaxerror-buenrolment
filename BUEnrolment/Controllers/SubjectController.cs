@@ -22,6 +22,16 @@ namespace BUEnrolment.Controllers
         /// </summary>
         private BUEnrolmentContext db = new BUEnrolmentContext();
 
+        public SubjectController(BUEnrolmentContext db)
+        {
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
+            this.db = db;
+        }
+
+        public SubjectController()
+        {
+
+        }
         /// <summary>
         /// GET: /Subject/
         /// 
@@ -255,7 +265,7 @@ namespace BUEnrolment.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException)
             {
                 return RedirectToAction("Delete",
                     new System.Web.Routing.RouteValueDictionary { { "concurrencyError", true } });
