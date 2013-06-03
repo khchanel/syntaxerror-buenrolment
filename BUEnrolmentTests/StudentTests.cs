@@ -159,5 +159,17 @@ namespace BUEnrolmentTests
             Assert.AreEqual(1, requestableSubjects.Count);
             Assert.AreEqual("Apple and Orange", requestableSubjects[0].Name);
         }
+
+        [TestMethod]
+        public void StudentCompleteSubject()
+        {
+            Assert.AreEqual(0, _student.CompletedSubject.Count);
+
+            Result appleResult = new Result() { Id = 1, Mark = 60.5, Subject = _subjects.Find(s => s.Name == "Apple")};
+            _student.CompleteSubject(appleResult);
+
+            Assert.AreEqual(1, _student.CompletedSubject.Count);
+            Assert.AreEqual(60.5, _student.CompletedSubject.Find(r => r.Id == 1).Mark);
+        }
     }
 }
