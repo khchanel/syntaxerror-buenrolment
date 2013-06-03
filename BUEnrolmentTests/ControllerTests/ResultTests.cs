@@ -87,7 +87,7 @@ namespace BUEnrolmentTests.ControllerTests
             ViewResult resultViewResult = (ViewResult)resultController.Create(subject.Id);
             Assert.AreEqual(resultViewResult.ViewData["subject"], subject);
             Subject addedSubject = resultController.db.Subjects.FirstOrDefault(a => a.Name == "thisIsTestSubject");
-            Assert.AreEqual(subject, addedSubject);
+            Assert.AreEqual(subject.SubjectNumber, addedSubject.SubjectNumber);
         }
     }
 }
