@@ -20,6 +20,12 @@ namespace BUEnrolmentTests
             // do nothing
         }
 
+        /// <summary>
+        /// on Intialization, 6 subjects will be added to _subjects
+        /// Apple and Orange subjects has prereq of Apple, Orange subjects
+        /// 
+        /// an instance of Student is created and stored in _student
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
