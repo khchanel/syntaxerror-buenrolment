@@ -18,7 +18,10 @@
             @Html.DisplayName("Subject Number")
         </th>
         <th>
-             @Html.DisplayName("Description")
+            @Html.DisplayName("Description")
+        </th>
+        <th>
+            @Html.DisplayName("Status")
         </th>
     </tr>
 
@@ -30,7 +33,10 @@
                  @Html.DisplayName((string)request.Subject.Name)
              </td>
              <td>
-                @Html.DisplayName((string)request.Description)
+                 @Html.DisplayName((string)request.Description)
+             </td>
+             <td>
+                 @Html.DisplayName((string)request.Status)
              </td>
              @if (Roles.IsUserInRole("Admin"))
              {
