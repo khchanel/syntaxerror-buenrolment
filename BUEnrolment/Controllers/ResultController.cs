@@ -19,7 +19,7 @@ namespace BUEnrolment.Controllers
         /// <summary>
         /// Database context for EntityFramework
         /// </summary>
-        private BUEnrolmentContext db = new BUEnrolmentContext();
+        public BUEnrolmentContext db = new BUEnrolmentContext();
 
         public ResultController(BUEnrolmentContext db)
         {
