@@ -88,6 +88,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ControllerTests\StudentTests.cs" />
     <Compile Include="ModelTests\ResultTests.cs" />
     <Compile Include="ModelTests\StudentTests.cs" />
     <Compile Include="ModelTests\SubjectTests.cs" />
