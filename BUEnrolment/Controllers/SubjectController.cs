@@ -40,7 +40,7 @@ namespace BUEnrolment.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            List<Subject> allSubjects = db.Subjects.Where(s => s.Active == true).ToList();
+            List<Subject> allSubjects = db.Subjects.Where(s => s.Active).ToList();
 
             // if user is student, filter down the list to only show what they can enroll
             if (Roles.IsUserInRole("Student")) 
@@ -93,7 +93,7 @@ namespace BUEnrolment.Controllers
         /// <returns></returns>
         public ActionResult Create()
         {
-            SelectList allSubjects = new SelectList(db.Subjects, "Id", "Name");
+            SelectList allSubjects = new SelectList(db.Subjects.Where(s => s.Active), "Id", "Name");
             ViewBag.allSubjects = allSubjects;
             return View();
         }
@@ -150,7 +150,7 @@ namespace BUEnrolment.Controllers
             {
                 return RedirectToAction("Index");
             }
-            List<Subject> NonPrerequisites = db.Subjects.ToList().Except(subject.Prerequisites).ToList();
+            List<Subject> NonPrerequisites = db.Subjects.Where(s => s.Active).ToList().Except(subject.Prerequisites).ToList();
             NonPrerequisites.Remove(subject);
             ViewBag.SelectedPrerequisites = new SelectList(subject.Prerequisites, "Id", "Name");
             ViewBag.NonPrerequisites = new SelectList(NonPrerequisites, "Id", "Name");
