@@ -43,7 +43,8 @@ namespace BUEnrolment.Controllers
         public ActionResult Create()
         {
             Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
-            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "requestId", "Name");
+
+            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.Where(s => s.Active).ToList()), "Id", "Name");
             ViewBag.CurrentStudent = student;
             return View();
         }
@@ -91,7 +92,7 @@ namespace BUEnrolment.Controllers
             }
 
             Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
-            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "requestId", "Name");
+            ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.Where(s => s.Active).ToList()), "requestId", "Name");
             ViewBag.CurrentStudent = student;
 
             return View(request);
