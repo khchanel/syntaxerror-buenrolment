@@ -72,7 +72,7 @@ namespace BUEnrolmentTests.ModelTests
         #endregion
 
         [TestMethod]
-        public void SubjectCreation()
+        public void StudentSubjectCreation()
         {
             // check count match
             Assert.AreEqual(6, _subjects.Count);
