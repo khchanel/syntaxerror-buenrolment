@@ -18,6 +18,7 @@ namespace BUEnrolment.Controllers
         //
         // GET: /Request/
 
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Index()
         {
             List<Student> StudentList = new List<Student>();
@@ -39,7 +40,7 @@ namespace BUEnrolment.Controllers
 
         //
         // GET: /Request/Create
-
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Create()
         {
             Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
@@ -51,7 +52,7 @@ namespace BUEnrolment.Controllers
 
         // 
         // POST: /Request/Create
-
+        [Authorize(Roles = "Admin, Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Request request, int? selectedSubject)
@@ -98,6 +99,7 @@ namespace BUEnrolment.Controllers
             return View(request);
         }
 
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Approve(int requestId, int studentId)
         {
             Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);
@@ -107,6 +109,7 @@ namespace BUEnrolment.Controllers
             return RedirectToAction("Enrol", "Student", new { studentId = studentId, subjectId = request.Subject.Id });
         }
 
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Disapprove(int requestId, int studentId)
         {
             Request request = db.Requests.Include(r => r.Subject).FirstOrDefault(r => r.Id == requestId);

@@ -28,6 +28,7 @@ namespace BUEnrolment.Controllers
         /// List subject page
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Index()
         {
             List<Subject> allSubjects = db.Subjects.Where(s => s.Active).ToList();
@@ -50,6 +51,7 @@ namespace BUEnrolment.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Details(int id = 0)
         {
             Subject subject = db.Subjects.Find(id);
@@ -64,6 +66,7 @@ namespace BUEnrolment.Controllers
         /// Student View Enrolled subject list
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Enrolled()
         {
             Student student = db.Students.Include(m => m.EnrolledSubjects).FirstOrDefault(m => m.Id == WebSecurity.CurrentUserId);
@@ -81,6 +84,7 @@ namespace BUEnrolment.Controllers
         /// Create subject form page
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Create()
         {
             SelectList allSubjects = new SelectList(db.Subjects.Where(s => s.Active), "Id", "Name");
@@ -96,6 +100,7 @@ namespace BUEnrolment.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Create(Subject subject, List<int> SelectedPrerequisites)
         {
             bool subjectInContext = (db.Subjects.FirstOrDefault(s => s.SubjectNumber == subject.SubjectNumber) != null) ? true : false;
@@ -129,6 +134,7 @@ namespace BUEnrolment.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Edit(int id = 0)
         {
             Subject subject = db.Subjects.Find(id);
@@ -156,6 +162,7 @@ namespace BUEnrolment.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Edit(Subject subject, List<int> PrerequisiteList, int id = 0)
         {
             List<Subject> SelectedPrerequisites = new List<Subject>();
@@ -224,6 +231,7 @@ namespace BUEnrolment.Controllers
         /// <param name="concurrencyError"></param>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Delete(bool? concurrencyError, int id = 0)
         {
             if (concurrencyError.GetValueOrDefault())
@@ -245,6 +253,7 @@ namespace BUEnrolment.Controllers
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult DeleteConfirmed(Subject subject)
         {
 

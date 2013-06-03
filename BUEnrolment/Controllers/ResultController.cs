@@ -28,6 +28,7 @@ namespace BUEnrolment.Controllers
         /// </summary>
         /// <param name="id">subject id</param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Create(int id)
         {
             Subject subject = db.Subjects.Include(s => s.EnrolledStudents)
@@ -47,6 +48,7 @@ namespace BUEnrolment.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Create(List<Result> results, int id)
         {
             if (ModelState.IsValid)
@@ -83,6 +85,7 @@ namespace BUEnrolment.Controllers
         /// List result page for the current logged in student
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Details()
         {
             Student student = db.Students.Include(s => s.CompletedSubject).Include(s => s.CompletedSubject.Select(c => c.Subject)).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);

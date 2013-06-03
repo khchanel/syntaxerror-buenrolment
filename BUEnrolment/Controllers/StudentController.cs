@@ -29,6 +29,7 @@ namespace BUEnrolment.Controllers
         /// <param name="studentId"></param>
         /// <param name="subjectId"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Student")]
         public ActionResult Enrol(int studentId, int subjectId)
         {
             Student student = db.Students.Include(s => s.Requests).FirstOrDefault(s => s.Id == studentId);
