@@ -3,6 +3,8 @@ using System.Configuration;
 using System.Collections.Generic;
 using BUEnrolment.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BUEnrolment.Controllers;
+using System.Web.Mvc;
 
 namespace BUEnrolmentTests.ModelTests
 {
@@ -13,7 +15,8 @@ namespace BUEnrolmentTests.ModelTests
     public class ResultTests
     {
         private Result _result;
-        private List<Subject> _subjects; 
+        private List<Subject> _subjects;
+        private BUEnrolmentContext db = new BUEnrolmentContext();
 
 
         public ResultTests()
@@ -110,6 +113,17 @@ namespace BUEnrolmentTests.ModelTests
         {
             var result = new Result() { Id = 1, Mark = 85, Subject = _subjects[0] };
             Assert.AreEqual(Result.ResultGrade.HighDistinction, result.Grade);
+        }
+
+        [TestMethod]
+        public void CheckModelDataTypeForResult()
+        {
+            ResultController resultController = new ResultController(db);
+            Subject subject = new Subject() { Active = true, MaxEnrolment = 3, Name = "apple", SubjectNumber = "123", Description = "", Id = -1 };
+            db.Subjects.Add(subject);
+            db.SaveChanges();
+            ViewResult resultViewResult = (ViewResult)resultController.Create(subject.Id);
+            Assert.AreEqual(resultViewResult.ViewData["subject"], subject);
         }
     }
 }
