@@ -54,11 +54,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ResultTests.cs" />
-    <Compile Include="StudentTests.cs" />
-    <Compile Include="SubjectTests.cs" />
+    <Compile Include="ModelTests\ResultTests.cs" />
+    <Compile Include="ModelTests\StudentTests.cs" />
+    <Compile Include="ModelTests\SubjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestTests.cs" />
+    <Compile Include="ModelTests\RequestTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUEnrolment\BUEnrolment.csproj">

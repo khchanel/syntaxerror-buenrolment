@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BUEnrolment;
 using BUEnrolment.Models;
 
-namespace BUEnrolmentTests
+namespace BUEnrolmentTests.ModelTests
 {
     [TestClass]
     public class RequestTests

@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BUEnrolmentTests
+namespace BUEnrolmentTests.ModelTests
 {
     [TestClass]
     public class SubjectTests

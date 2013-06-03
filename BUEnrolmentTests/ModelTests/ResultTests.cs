@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Configuration;
-using System.Text;
 using System.Collections.Generic;
 using BUEnrolment.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BUEnrolmentTests
+namespace BUEnrolmentTests.ModelTests
 {
     /// <summary>
     /// Summary description for ResultTests

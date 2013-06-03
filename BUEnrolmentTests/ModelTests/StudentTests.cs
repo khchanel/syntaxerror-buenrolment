@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BUEnrolment.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BUEnrolmentTests
+namespace BUEnrolmentTests.ModelTests
 {
     /// <summary>
     /// Summary description for StudentTests
