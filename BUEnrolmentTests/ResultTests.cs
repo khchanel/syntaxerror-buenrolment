@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Text;
 using System.Collections.Generic;
+using BUEnrolment.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BUEnrolmentTests
@@ -11,6 +14,10 @@ namespace BUEnrolmentTests
     [TestClass]
     public class ResultTests
     {
+        private Result _result;
+        private List<Subject> _subjects; 
+
+
         public ResultTests()
         {
             //
@@ -18,22 +25,14 @@ namespace BUEnrolmentTests
             //
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [TestInitialize]
+        public void Setup()
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            _subjects = new List<Subject>
+                {
+                    new Subject() {Active = true, Name = "Apple", MaxEnrolment = 3, SubjectNumber = "1000"},
+                    new Subject() {Active = true, Name = "Orange", MaxEnrolment = 3, SubjectNumber = "2000"}
+                };
         }
 
         #region Additional test attributes
@@ -59,11 +58,60 @@ namespace BUEnrolmentTests
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void ResultCreation()
         {
-            //
-            // TODO: Add test logic here
-            //
+            _result = new Result() { Id = 1, Mark = 60.5, Subject = _subjects[0]};
+
+            Assert.AreEqual(1, _result.Id);
+            Assert.AreEqual(60.5, _result.Mark);
+            Assert.AreEqual("Apple", _result.Subject.Name);
+        }
+
+        [TestMethod]
+        public void ResultGradeConversionAppSettings()
+        {
+            NameValueCollection appSettings = ConfigurationManager.AppSettings;
+
+            Assert.AreEqual("85", appSettings["HighDistinction"]);
+            Assert.AreEqual("75", appSettings["Distinction"]);
+            Assert.AreEqual("65", appSettings["Credit"]);
+            Assert.AreEqual("50", appSettings["Pass"]);
+            Assert.AreEqual("0", appSettings["Fail"]);
+        }
+
+        [TestMethod]
+        public void ResultGradeConversionFail()
+        {
+            var result = new Result() { Id = 1, Mark = 30, Subject = _subjects[0] };
+            Assert.AreEqual(Result.ResultGrade.Fail, result.Grade);
+        }
+
+        [TestMethod]
+        public void ResultGradeConversionPass()
+        {
+            var result = new Result() { Id = 1, Mark = 50, Subject = _subjects[0] };
+            Assert.AreEqual(Result.ResultGrade.Pass, result.Grade);
+        }
+
+        [TestMethod]
+        public void ResultGradeConversionCredit()
+        {
+            var result = new Result() { Id = 1, Mark = 65, Subject = _subjects[0] };
+            Assert.AreEqual(Result.ResultGrade.Credit, result.Grade);
+        }
+
+        [TestMethod]
+        public void ResultGradeConversionDistinction()
+        {
+            var result = new Result() { Id = 1, Mark = 75, Subject = _subjects[0] };
+            Assert.AreEqual(Result.ResultGrade.Distinction, result.Grade);
+        }
+
+        [TestMethod]
+        public void ResultGradeConversionHighDistinction()
+        {
+            var result = new Result() { Id = 1, Mark = 85, Subject = _subjects[0] };
+            Assert.AreEqual(Result.ResultGrade.HighDistinction, result.Grade);
         }
     }
 }
