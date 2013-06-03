@@ -15,10 +15,8 @@ namespace BUEnrolmentTests
         [TestMethod]
         public void TestActionRequestIndex()
         {
-            RequestController requestController = new RequestController();
-            ActionResult result = requestController.Index();
-
-            System.Console.WriteLine(result.ToString());
+            //RequestController requestController = new RequestController();
+            //ActionResult result = requestController.Index();
         }
     }
 }
