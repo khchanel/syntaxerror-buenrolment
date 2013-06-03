@@ -30,6 +30,7 @@ namespace BUEnrolment.Models
         /// <summary>
         /// Reference to Subject
         /// </summary>
+        [Required]
         public virtual Subject Subject { get; set; }
 
         /// <summary>

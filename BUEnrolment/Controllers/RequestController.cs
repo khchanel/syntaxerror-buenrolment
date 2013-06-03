@@ -53,8 +53,13 @@ namespace BUEnrolment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Request request, int selectedSubject)
+        public ActionResult Create(Request request, int? selectedSubject)
         {
+            if (selectedSubject == null)
+            {
+                ModelState.AddModelError(string.Empty, "No subject was selected");
+            }
+
             if (ModelState.IsValid)
             {
                 Student currentStudent = db.Students.FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
@@ -85,7 +90,7 @@ namespace BUEnrolment.Controllers
                 }
             }
 
-            Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault();
+            Student student = db.Students.Include(s => s.EnrolledSubjects).FirstOrDefault(s => s.Id == WebSecurity.CurrentUserId);
             ViewBag.RequestableSubjects = new SelectList(student.GetRequestableSubjects(db.Subjects.ToList()), "Id", "Name");
             ViewBag.CurrentStudent = student;
 
