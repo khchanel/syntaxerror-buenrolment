@@ -108,17 +108,8 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="..\BUEnrolment\App_Data\BUEnrolment.mdf">
-      <Link>App_Data\BUEnrolment.mdf</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\BUEnrolment\App_Data\BUEnrolment_log.ldf">
-      <Link>App_Data\BUEnrolment_log.ldf</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>BUEnrolment.mdf</DependentUpon>
-    </Content>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
