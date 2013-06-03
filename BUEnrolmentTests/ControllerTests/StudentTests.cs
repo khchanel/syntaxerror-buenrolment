@@ -37,7 +37,8 @@ namespace BUEnrolmentTests.ControllerTests
 
             _sc.Enrol(dbStudent.Id, dbSubject.Id);
 
-            Assert.AreEqual(subject.Id, dbStudent.EnrolledSubjects.FirstOrDefault(s => s.SubjectNumber == "1").Id);
+            Assert.AreEqual(subject.SubjectNumber, dbStudent.EnrolledSubjects.FirstOrDefault(s => s.SubjectNumber == "1").SubjectNumber);
+            Assert.AreEqual(subject.Name, dbStudent.EnrolledSubjects.FirstOrDefault(s => s.SubjectNumber == "1").Name);
         }
 
         [TestMethod]
